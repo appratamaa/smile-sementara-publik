@@ -16,6 +16,10 @@ Route::get('/admin/antrian', function () {
     return view('admin.adminAntrian');
 });
 
+Route::get('/admin/login', function () {
+    return view('admin.adminLogin');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
