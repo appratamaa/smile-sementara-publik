@@ -12,7 +12,7 @@
     <!-- Sidebar -->
     <div class="w-64 bg-white shadow-md p-4 flex flex-col h-full">
         <h1 class="text-left mb-4">
-            <img src="image/SMILE LOGO.png" alt="Smile logo" class="h-10">
+            <img src="{{ asset('image/SMILE LOGO.png') }}" alt="Smile logo" class="h-10">
         </h1>
         <ul class="space-y-2 flex-grow">
             <li>
@@ -39,7 +39,7 @@
 
     <!-- Main Content -->
     <div class="flex-1 p-6">
-        <h2 class="text-2xl font-semibold mb-4">Artikel Admin</h2>
+        <h2 class="text-2xl font-semibold mb-4">Rekam Medis Admin</h2>
         
         <!-- Form Input -->
         <div class="bg-white shadow-md p-6 rounded">

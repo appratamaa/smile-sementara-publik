@@ -16,8 +16,20 @@ Route::get('/admin/antrian', function () {
     return view('admin.adminAntrian');
 });
 
+Route::get('/admin/rekam medis', function () {
+    return view('admin.adminRemed');
+});
+
 Route::get('/admin/login', function () {
     return view('admin.adminLogin');
+});
+
+Route::get('/admin/registrasi', function () {
+    return view('admin.adminRegistrasi');
+});
+
+Route::get('/dataantrian', function () {
+    return view('admin.dataAntrian');
 });
 
 
