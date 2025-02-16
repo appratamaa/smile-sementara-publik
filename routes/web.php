@@ -7,6 +7,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/masuk', function () {
+    return view('masuk');
+})->name('masuk');
+Route::get('/daftar', function () {
+    return view('daftar');
+})->name('daftar');
+Route::get('/artikel', function () {
+    return view('artikel');
+})->name('artikel');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

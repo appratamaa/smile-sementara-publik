@@ -1,4 +1,5 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
+// const defaultTheme = require('tailwindcss/defaultTheme')
 import forms from '@tailwindcss/forms';
 
 /** @type {import('tailwindcss').Config} */
@@ -12,7 +13,9 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                // sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Poppins', ...defaultTheme.fontFamily.sans],
+                // sans: ['InterVariable', '...defaultTheme.fontFamily.sans'],
             },
         },
     },
