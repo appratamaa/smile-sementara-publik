@@ -21,10 +21,10 @@
                             <div class="ml-10 flex items-baseline space-x-4">
                                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                                 <a href="/"
-                                    class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                                    aria-current="page">Beranda</a>
+                                    class="rounded-md px-3 py-2 text-sm font-medium text-black hover:bg-gray-700 hover:text-white">Beranda</a>
                                 <a href="/artikel"
-                                    class="rounded-md px-3 py-2 text-sm font-medium text-black hover:bg-gray-700 hover:text-white">Artikel</a>
+                                    class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                                    aria-current="page">Artikel</a>
                                 <a href="#"
                                     class="rounded-md px-3 py-2 text-sm font-medium text-black hover:bg-gray-700 hover:text-white">Chat
                                     Dokter</a>
@@ -171,10 +171,10 @@
             <div x-show="isOpen" class="md:hidden" id="mobile-menu">
                 <div class="space-y-1 px-2 pt-2 pb-3 sm:px-3">
                     <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                    <a href="/" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-                        aria-current="page">Beranda</a>
-                    <a href="/artikel"
-                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Artikel</a>
+                    <a href="/"
+                        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Beranda</a>
+                    <a href="/artikel" class="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+                        aria-current="page">Artikel</a>
                     <a href="#"
                         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Chat
                         Dokter</a>
@@ -208,27 +208,50 @@
 
         <header class="bg-white shadow-sm">
             <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                <h1 class="text-3xl font-bold tracking-tight text-gray-900 mt-24">Klinik drg. Robet Agustinus Pangandaran</h1>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900 ">Artikel Kesehatan Gigi</h1>
+                <p class="mt-4 text-base text-gray-600">Carilah artikel kesehatan gigi yang sesuai untukmu!</p>
             </div>
         </header>
         <main class="bg-white min-h-screen">
-            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row">
-                <!-- Left side -->
-                <div class="flex-1 mb-6 lg:mb-0">
-                    <p class="text-base text-gray-600 text-justify">Memberikan pelayanan kesehatan gigi dan 
-                        mulut terbaik untuk keluarga Anda. Kami berkomitmen pada <b>kualitas, kenyamanan, dan kepercayaan</b></p>
-                    <div class="flex justify-center lg:justify-start">
-                        <button class="mt-6 rounded-md bg-white px-4 py-2 text-black border-2 border-black hover:bg-black hover:text-white">
-                            Buat Janji
-                        </button>
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div >
+                    <input type="text" placeholder="Cari artikel..." class="w-full rounded-md bg-white px-4 py-2 text-gray-900 border-2 border-gray-300 focus:border-blue-500 focus:outline-none">
+                </div>
+                <div class="mt-6 grid gap-4 lg:grid-cols-4">
+                    <!-- Card 1 -->
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <img src="image/artikel1.png" alt="Artikel 1" class="w-full h-40 object-cover rounded-t-lg">
+                        <div class="mt-4">
+                            <h3 class="text-lg font-bold">Judul Artikel 1</h3>
+                            <p class="mt-2 text-gray-600">Deskripsi singkat tentang artikel 1...</p>
+                        </div>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <img src="image/artikel2.png" alt="Artikel 2" class="w-full h-40 object-cover rounded-t-lg">
+                        <div class="mt-4">
+                            <h3 class="text-lg font-bold">Judul Artikel 2</h3>
+                            <p class="mt-2 text-gray-600">Deskripsi singkat tentang artikel 2...</p>
+                        </div>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <img src="image/artikel3.png" alt="Artikel 3" class="w-full h-40 object-cover rounded-t-lg">
+                        <div class="mt-4">
+                            <h3 class="text-lg font-bold">Judul Artikel 3</h3>
+                            <p class="mt-2 text-gray-600">Deskripsi singkat tentang artikel 3...</p>
+                        </div>
+                    </div>
+                    <!-- Card 4 -->
+                    <div class="bg-white shadow-md rounded-lg p-4">
+                        <img src="image/artikel4.png" alt="Artikel 4" class="w-full h-40 object-cover rounded-t-lg">
+                        <div class="mt-4">
+                            <h3 class="text-lg font-bold">Judul Artikel 4</h3>
+                            <p class="mt-2 text-gray-600">Deskripsi singkat tentang artikel 4...</p>
+                        </div>
                     </div>
                 </div>
-        
-                <!-- Right side -->
-                <div class="flex-1 flex items-center justify-center lg:justify-end lg:items-start mt-8 lg:mt-0">
-                    <img class="max-w-full h-auto lg:max-w-md" src="image/Profil Dokter.png" alt="Profil Dokter">
-                </div>                
-            </div>
+            </div>        
         </main>                                      
     </div>
 
