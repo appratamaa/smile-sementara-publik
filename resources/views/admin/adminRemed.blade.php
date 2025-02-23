@@ -15,31 +15,32 @@
             <img src="{{ asset('image/SMILE LOGO.png') }}" alt="Smile logo" class="h-10">
         </h1>
         <ul class="space-y-2 flex-grow">
-            <li>
-                <a href="/admin" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded" id="adminArtikel">Artikel</a>
-            </li>
-            <li>
-                <a href="/admin/antrian" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded" id="adminAntrian">Antrian</a>
-            </li>
-            <li>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded" id="jadwal-link">Jadwal Praktik</a>
-            </li>
-            <li>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded" id="rekamMedis-link">Rekam Medis</a>
-            </li>
-            <li>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded" id="reservasi-link">Reservasi</a>
-            </li>
-            <li>
-                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded" id="chats-link">Chat</a>
-            </li>
+            <li><a href="/adminArtikel" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Artikel</a></li>
+            <li><a href="/admin/antrian" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Antrian</a></li>
+            <li><a href="/admin/rekam-medis" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Rekam Medis</a></li>
+            <li><a href="/adminPraktik" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Praktik</a></li>
+            <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Chat</a></li>
         </ul>
-        <a href="#" class="block px-4 py-2 text-red-600 font-bold hover:bg-red-100 rounded" id="artikel-link">Keluar</a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 font-bold hover:bg-red-100 rounded">Keluar</button>
+        </form>
     </div>
 
     <!-- Main Content -->
     <div class="flex-1 p-6">
-        <h2 class="text-2xl font-semibold mb-4">Rekam Medis Admin</h2>
+
+        <div class="flex justify-between items-center bg-white p-4 shadow-md rounded-lg mb-4">
+            <h2 class="text-2xl font-semibold">Rekam Medis</h2>
+
+            <!-- Profile Section -->
+            <div class="flex items-center space-x-4">
+                <span class="text-gray-700 text-sm">{{ Auth::user()->email }}</span>
+                <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
+                    <span class="text-white font-semibold">{{ substr(Auth::user()->name, 0, 1) }}</span>
+                </div>
+            </div>
+        </div>
         
         <!-- Form Input -->
         <div class="bg-white shadow-md p-6 rounded">
