@@ -9,6 +9,7 @@
 </head>
 <body>
 
+
   <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <img src="{{ asset('image/SMILE LOGO.png') }}" alt="Smile logo" class="mx-auto h-10 w-auto mt-5">
@@ -22,7 +23,7 @@
             </div>
         @endif
 
-        <form class="space-y-6" action="{{ route('register') }}" method="POST">
+        <form class="space-y-6" action="{{ route('adminRegistrasi') }}" method="POST">
             @csrf
             <div>
                 <label for="name" class="block text-sm font-medium text-gray-900">Nama Lengkap</label>
@@ -69,7 +70,7 @@
         </form>
 
         <p class="mt-4 text-center text-sm text-gray-600">Sudah punya akun? 
-            <a href="{{ route('adminLogin') }}" class="font-semibold text-red-600 hover:text-indigo-500">Masuk</a>
+            <a href="{{ route('admin.login') }}" class="font-semibold text-red-600 hover:text-indigo-500">Masuk</a>
         </p>
     </div>
 </div>
