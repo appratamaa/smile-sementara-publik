@@ -16,6 +16,18 @@ Route::get('/daftar', function () {
 Route::get('/artikel', function () {
     return view('artikel');
 })->name('artikel');
+Route::get('/informasi', function () {
+    return view('informasi');
+})->name('informasi');
+Route::get('/chatdokter', function () {
+    return view('chatdokter');
+})->name('chatdokter');
+
+Route::get('/lainnya', function () {
+    return view('lainnya');
+})->name('lainnya');
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
