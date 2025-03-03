@@ -10,7 +10,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-<<<<<<< HEAD
 Route::get('/masuk', function () {
     return view('masuk');
 })->name('masuk');
@@ -21,12 +20,11 @@ Route::get('/artikel', function () {
     return view('artikel');
 })->name('artikel');
 
-=======
 // Admin Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminArtikel', [ArtikelController::class, 'index'])->name('adminArtikel');
     Route::post('/adminArtikel', [ArtikelController::class, 'store'])->name('artikel.store');
-    Route::view('/admin/antrian', 'admin.adminAntrian');
+    Route::view('/adminAntrian', 'admin.adminPraktik');
     Route::view('/admin/rekam-medis', 'admin.adminRemed');
     Route::view('/adminPraktik', 'admin.adminPraktik');
     Route::view('/dataantrian', 'admin.dataAntrian');
@@ -42,7 +40,7 @@ Route::get('/registrasiAdmin', [AdminController::class, 'showRegistrasi'])->name
 Route::post('/registrasiAdmin', [AdminController::class, 'registrasiAdmin']);
 
 // Dashboard Redirect
->>>>>>> origin/admin
+//origin/admin
 Route::get('/dashboard', function () {
     return redirect()->route('adminArtikel');
 })->middleware(['auth', 'verified'])->name('dashboard');

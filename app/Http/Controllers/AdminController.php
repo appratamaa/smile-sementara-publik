@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; // Sesuaikan dengan model yang digunakan
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -13,6 +13,12 @@ class AdminController extends Controller
     public function showRegistrasi()
     {
         return view('adminRegistrasi');
+    }
+
+    // Menampilkan halaman login admin
+    public function showLogin()
+    {
+        return view('adminLogin');
     }
 
     // Menangani proses registrasi admin
@@ -30,14 +36,46 @@ class AdminController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'admin', // Jika ada kolom role
+            'role' => 'admin', // Pastikan ada kolom role di database
         ]);
 
         // Login otomatis setelah registrasi
         Auth::login($admin);
 
         // Redirect ke halaman adminArtikel
-        return redirect()->route('admin.adminArtikel')->with('success', 'Registrasi berhasil, selamat datang di halaman admin!');
+        return redirect()->route('adminArtikel')->with('success', 'Registrasi berhasil, selamat datang di halaman admin!');
+    }
+
+    // Menangani proses login admin
+    public function adminLogin(Request $request)
+    {
+        // Validasi input
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        // Coba melakukan autentikasi
+        if (Auth::attempt($credentials)) {
+            // Regenerasi session untuk keamanan
+            $request->session()->regenerate();
+
+            // Redirect ke dashboard admin
+            return redirect()->route('adminArtikel');
+        }
+
+        // Jika gagal, kembali ke halaman login dengan pesan error
+        return back()->withErrors([
+            'email' => 'Email atau password salah!',
+        ])->onlyInput('email');
+    }
+
+    // Menangani proses logout admin
+    public function adminLogout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/adminLogin')->with('success', 'Anda telah logout.');
     }
 }
-
