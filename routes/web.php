@@ -1,22 +1,42 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\MasukController;
 use App\Http\Controllers\ArtikelController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\ArtikelUserController;
 
 // User Routes
 Route::get('/', function () {
     return view('welcome');
 });
 
-<<<<<<< HEAD
 Route::get('/masuk', function () {
-    return view('masuk');
+    return view('masuk'); // Gantilah 'masuk' dengan nama file Blade yang digunakan
 })->name('masuk');
-Route::get('/daftar', function () {
-    return view('daftar');
-})->name('daftar');
+
+Route::post('/masuk', [MasukController::class, 'masuk'])->name('masuk');
+
+// Route Logout
+
+Route::post('/keluar', function () {
+    Auth::logout();
+    session()->invalidate();
+    session()->regenerateToken();
+    return redirect()->route('masuk'); // Pastikan 'masuk' adalah nama route yang benar
+})->name('keluar');
+
+Route::get('/beranda', function () {
+    $pengguna = session('pengguna'); // Ambil data pengguna dari sesi
+    return view('beranda', compact('pengguna'));
+})->name('beranda');
+
+Route::get('/daftar', [PenggunaController::class, 'showForm'])->name('daftar');
+Route::post('/daftar', [PenggunaController::class, 'daftar']);
 Route::get('/artikel', function () {
     return view('artikel');
 })->name('artikel');
@@ -31,9 +51,19 @@ Route::get('/lainnya', function () {
     return view('lainnya');
 })->name('lainnya');
 
+// Route::get('/antrean', function () {
+//     return view('antrean'); // Gantilah 'antrean' dengan nama file Blade yang digunakan
+// })->name('antrean');
+
+Route::post('/appointments', [AppointmentController::class, 'store'])->name('appointments.store');
+Route::get('/antrean/{id}', [AppointmentController::class, 'show'])->name('antrean.show');
+
+Route::get('/artikel', [ArtikelUserController::class, 'index'])->name('artikel.index');
+Route::get('/artikel/{id}', [ArtikelUserController::class, 'show'])->name('artikel.show');
+
+Route::get('/artikel/cari', [ArtikelUserController::class, 'search'])->name('artikel.search');
 
 
-=======
 // Admin Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminArtikel', [ArtikelController::class, 'index'])->name('adminArtikel');
@@ -54,7 +84,6 @@ Route::get('/registrasiAdmin', [AdminController::class, 'showRegistrasi'])->name
 Route::post('/registrasiAdmin', [AdminController::class, 'registrasiAdmin']);
 
 // Dashboard Redirect
->>>>>>> origin/admin
 Route::get('/dashboard', function () {
     return redirect()->route('adminArtikel');
 })->middleware(['auth', 'verified'])->name('dashboard');

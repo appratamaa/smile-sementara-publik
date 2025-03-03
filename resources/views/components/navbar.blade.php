@@ -1,16 +1,17 @@
-<nav class="bg-white transition-all duration-300" x-data="{ isSticky: false }" 
-     :class="{'fixed top-0 w-full shadow-md z-50': isSticky}" 
-     x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 50 })">
+<nav class="bg-white transition-all duration-500 ease-in-out" 
+    x-data="{ isSticky: false, isOpen: false }"
+    :class="{ 'fixed top-0 w-full shadow-md z-50 backdrop-blur-md bg-white/50': isSticky }" 
+    x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 250 })">
+
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="shrink-0">
                     <img class="w-18 h-10" src="image/SMILE LOGO.png" alt="Your Company">
                 </div>
-        
+
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <x-nav-link href="/" :active="request()->is('/')">Beranda</x-nav-link>
                         <x-nav-link href="/artikel" :active="request()->is('artikel')">Artikel</x-nav-link>
                         <x-nav-link href="/chatdokter" :active="request()->is('chatdokter')">Chat Dokter</x-nav-link>
@@ -21,7 +22,29 @@
             </div>
             <div class="hidden md:block">
                 <div class="ml-4 flex items-center md:ml-6 ">
-                    <!-- Button Notifikasi -->
+                    <!-- Ikon Sosial Media -->
+                    <div class="hidden md:block">
+                        <div class="ml-4 flex items-center md:ml-6 space-x-4">
+                            <!-- WhatsApp -->
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-600 hover:border-green-500 transition">
+                                <i class="fab fa-whatsapp text-gray-600 hover:text-green-500 text-lg"></i>
+                            </a>
+
+                            <!-- Instagram -->
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-600 hover:border-pink-500 transition">
+                                <i class="fab fa-instagram text-gray-600 hover:text-pink-500 text-lg"></i>
+                            </a>
+
+                            <!-- TikTok -->
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full border-2 border-gray-600 hover:border-black transition">
+                                <i class="fab fa-tiktok text-gray-600 hover:text-black text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                    {{-- <!-- Button Notifikasi -->
                     <div x-data="{ open: false }" class="relative">
                         <button @click="open = !open" type="button"
                             class="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
@@ -33,30 +56,7 @@
                                     d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
                             </svg>
                         </button>
-
-                        <!-- Dropdown Notifikasi -->
-                        <div x-show="open" @click.away="open = false"
-                            class="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg z-50">
-                            <div class="py-2 px-4 border-b text-gray-700 font-semibold">Notifikasi</div>
-                            <div class="max-h-60 overflow-y-auto">
-                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                    Notifikasi 1
-                                    <span class="block text-xs text-gray-500">1 jam yang lalu</span>
-                                </a>
-                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                    Notifikasi 2
-                                    <span class="block text-xs text-gray-500">2 jam yang lalu</span>
-                                </a>
-                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                    Notifikasi 3
-                                    <span class="block text-xs text-gray-500">3 jam yang lalu</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-
-
+                    </div> --}}
                     {{-- <!-- Profile dropdown -->
                         <div class="relative ml-3">
                             <div>
@@ -88,7 +88,7 @@
                                     tabindex="-1" id="user-menu-item-2">Keluar</a>
                             </div>
                         </div> --}}
-                    <div class="relative ml-3">
+                    <div class="relative ml-12">
                         <div>
                             <button type="button" @click="window.location.href='/masuk'"
                                 class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
@@ -191,11 +191,11 @@
                 class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Informasi</a>
             <a href="#"
                 class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Lainnya</a> --}}
-                <x-nav-mob href="/" :active="request()->is('/')">Beranda</x-nav-mob>
-                <x-nav-mob href="/artikel" :active="request()->is('artikel')">Artikel</x-nav-mob>
-                <x-nav-mob href="/chatdokter" :active="request()->is('chatdokter')">Chat Dokter</x-nav-mob>
-                <x-nav-mob href="/informasi" :active="request()->is('informasi')">Informasi</x-nav-mob>
-                <x-nav-mob href="/lainnya" :active="request()->is('lainnya')">Lainnya</x-nav-mob>
+            <x-nav-mob href="/" :active="request()->is('/')">Beranda</x-nav-mob>
+            <x-nav-mob href="/artikel" :active="request()->is('artikel')">Artikel</x-nav-mob>
+            <x-nav-mob href="/chatdokter" :active="request()->is('chatdokter')">Chat Dokter</x-nav-mob>
+            <x-nav-mob href="/informasi" :active="request()->is('informasi')">Informasi</x-nav-mob>
+            <x-nav-mob href="/lainnya" :active="request()->is('lainnya')">Lainnya</x-nav-mob>
         </div>
         <div class="border-t border-gray-700 pt-4 pb-3">
             <div class="flex items-center px-5">
