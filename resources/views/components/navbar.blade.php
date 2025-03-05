@@ -7,14 +7,16 @@
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <img class="w-18 h-10" src="image/SMILE LOGO.png" alt="Your Company">
+                    <a href="/">
+                    <img class="w-18 h-16" src="image/SMILE-LOGO.svg" alt="SMILE">
+                    </a>
                 </div>
 
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <x-nav-link href="/" :active="request()->is('/')">Beranda</x-nav-link>
                         <x-nav-link href="/artikel" :active="request()->is('artikel')">Artikel</x-nav-link>
-                        <x-nav-link href="/chatdokter" :active="request()->is('chatdokter')">Chat Dokter</x-nav-link>
+                        <x-nav-link href="/chatdokter" :active="request()->is('chatdokter')">Hubungi Dokter</x-nav-link>
                         <x-nav-link href="/informasi" :active="request()->is('informasi')">Informasi</x-nav-link>
                         <x-nav-link href="/lainnya" :active="request()->is('lainnya')">Lainnya</x-nav-link>
                     </div>
@@ -91,7 +93,7 @@
                     <div class="relative ml-12">
                         <div>
                             <button type="button" @click="window.location.href='/masuk'"
-                                class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+                                class="rounded-md bg-blue-500 px-3 py-2 text-sm font-medium text-white"
                                 id="login-button" aria-expanded="false" aria-haspopup="true">
                                 <span class="absolute -inset-1.5"></span>
                                 <span class="sr-only">Login</span>
@@ -193,7 +195,7 @@
                 class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Lainnya</a> --}}
             <x-nav-mob href="/" :active="request()->is('/')">Beranda</x-nav-mob>
             <x-nav-mob href="/artikel" :active="request()->is('artikel')">Artikel</x-nav-mob>
-            <x-nav-mob href="/chatdokter" :active="request()->is('chatdokter')">Chat Dokter</x-nav-mob>
+            <x-nav-mob href="/chatdokter" :active="request()->is('chatdokter')">Hubungi Dokter</x-nav-mob>
             <x-nav-mob href="/informasi" :active="request()->is('informasi')">Informasi</x-nav-mob>
             <x-nav-mob href="/lainnya" :active="request()->is('lainnya')">Lainnya</x-nav-mob>
         </div>

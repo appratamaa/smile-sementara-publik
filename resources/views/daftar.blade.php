@@ -13,7 +13,9 @@
     <div class="flex flex-col md:flex-row h-full">
         <div class="flex w-full md:w-1/2 flex-col justify-center px-6 py-12 lg:px-8">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <img class="mx-auto h-10 w-auto" src="image/SMILE LOGO.png" alt="SMILE">
+                <a href="/">
+                <img class="mx-auto h-20 w-auto" src="image/SMILE-LOGO.svg" alt="SMILE">
+                </a>
                 <h2 class="mt-5 text-center text-2xl font-bold text-gray-900">Daftar Akun</h2>
                 <h3 class="mt-2 text-center text-gray-600">
                     Selamat datang di <b>Smile!</b> <br>
@@ -78,7 +80,7 @@
 
                     <div>
                         <button type="submit"
-                            class="flex w-full justify-center px-3 py-1.5 text-white font-semibold bg-black rounded-md hover:bg-blue-500">
+                            class="flex w-full justify-center px-3 py-1.5 text-white font-semibold bg-blue-500 rounded-md ">
                             Daftar
                         </button>
                     </div>

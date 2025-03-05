@@ -25,7 +25,9 @@
         <!-- Right side -->
         <div class="flex w-full md:w-1/2 flex-col justify-center px-6 py-12 lg:px-8">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-                <img class="mx-auto h-10 w-auto" src="image/SMILE LOGO.png" alt="SMILE">
+                <a href="/">
+                <img class="mx-auto h-20 w-auto" src="image/SMILE-LOGO.svg" alt="SMILE">
+                </a>
                 <h2 class="mt-5 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Masuk</h2>
                 <h3 class="mt-2 text-center tracking-tight text-gray-600">Selamat datang di <b>Smile!</b><br> Masuk
                     sekarang untuk menikmati layanan kesehatan gigi terbaik dan berbagai kemudahan dalam merawat senyum
@@ -46,14 +48,14 @@
                       <input type="password" name="password" id="password" required
                           class="block w-full rounded-md px-3 py-1.5">
                       <div class="text-right mt-1">
-                          <a href="{{ route('password.request') }}" class="text-sm text-blue-600 hover:underline">
+                          <a href="{{ route('password.request') }}" class="text-sm text-black ">
                               Lupa Kata Sandi?
                           </a>
                       </div>
                   </div>                  
 
                     <div>
-                        <button type="submit" class="w-full bg-black text-white px-3 py-1.5 rounded-md">Masuk</button>
+                        <button type="submit" class="w-full bg-blue-500 text-white px-3 py-1.5 rounded-md">Masuk</button>
                     </div>
 
                     @if ($errors->has('login'))
@@ -92,7 +94,7 @@
 
                 <p class="mt-10 text-center text-sm/6 text-gray-500">
                     Belum punya akun?
-                    <a href="/daftar" class="font-semibold text-black hover:text-blue-500">Buat akun</a>
+                    <a href="/daftar" class="font-semibold text-black hover:text-blue-500">Daftar Sekarang!</a>
                 </p>
             </div>
         </div>

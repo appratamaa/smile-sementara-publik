@@ -4,11 +4,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MasukController;
+use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
+use Illuminate\Support\Facades\View;
 
 // User Routes
 Route::get('/', function () {
@@ -51,6 +53,10 @@ Route::get('/lainnya', function () {
     return view('lainnya');
 })->name('lainnya');
 
+Route::get('/rekammedis', function () {
+    return view('rekammedis');
+})->name('rekammedis');
+
 // Route::get('/antrean', function () {
 //     return view('antrean'); // Gantilah 'antrean' dengan nama file Blade yang digunakan
 // })->name('antrean');
@@ -59,9 +65,10 @@ Route::post('/appointments', [AppointmentController::class, 'store'])->name('app
 Route::get('/antrean/{id}', [AppointmentController::class, 'show'])->name('antrean.show');
 
 Route::get('/artikel', [ArtikelUserController::class, 'index'])->name('artikel.index');
+Route::get('/artikel/cari', [ArtikelUserController::class, 'search'])->name('artikel.search');
 Route::get('/artikel/{id}', [ArtikelUserController::class, 'show'])->name('artikel.show');
 
-Route::get('/artikel/cari', [ArtikelUserController::class, 'search'])->name('artikel.search');
+
 
 
 // Admin Routes

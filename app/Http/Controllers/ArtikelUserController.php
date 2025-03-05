@@ -9,21 +9,35 @@ class ArtikelUserController extends Controller
 {
     public function index()
     {
-        $artikels = ArtikelUser::latest()->get(); // Ambil semua artikel terbaru
+        // Ambil semua artikel terbaru
+        $artikels = ArtikelUser::latest()->get(); 
         return view('artikel', compact('artikels'));
     }
+
     public function show($id)
     {
         $artikel = ArtikelUser::findOrFail($id);
-        return view('artikeldetail', compact('artikel'));
+
+        // Ambil artikel lain yang tidak sama dengan artikel saat ini (misalnya 5 artikel terkait)
+        $relatedArticles = ArtikelUser::where('id_artikel', '!=', $id)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('artikeldetail', compact('artikel', 'relatedArticles'));
     }
+
     public function search(Request $request)
     {
-        $keyword = $request->input('keyword');
+        $keyword = trim($request->input('keyword')); // Menghapus spasi di awal & akhir
 
-        // Hanya mencari berdasarkan judul artikel
-        $artikels = ArtikelUser::where('judul_artikel', 'LIKE', "%$keyword%")->get();
+        if (empty($keyword)) {
+            return redirect()->route('artikel.index')->with('error', 'Masukkan kata kunci untuk mencari artikel.');
+        }
 
-        return view('artikel', compact('artikels'));
+        // Cari artikel berdasarkan judul_artikel yang mengandung keyword
+        $artikels = ArtikelUser::where('judul_artikel', 'LIKE', "%$keyword%")->latest()->get();
+
+        return view('artikel', compact('artikels'))->with('keyword', $keyword);
     }
 }
