@@ -1,4 +1,5 @@
-<footer class="py-12 px-28 text-white" style="background: linear-gradient(to right, #1a1a1a, #333, #1a1a1a);">
+<footer class="py-12 px-28 text-white relative"
+    style="background: linear-gradient(to right, #1a1a1a, #333, #1a1a1a);">
     <div class="grid gap-10 lg:grid-cols-4">
         <!-- Logo & Deskripsi -->
         <div class="lg:col-span-1 flex flex-col items-center lg:items-start">
@@ -53,11 +54,55 @@
         </div>
     </div>
 
-    <!-- Tombol Scroll ke Atas -->
-    <button x-data="{ show: false }" x-init="window.addEventListener('scroll', () => { show = window.scrollY > 100 })"
-        @click="window.scrollTo({ top: 0, behavior: 'smooth' })" x-show="show"
-        class="fixed bottom-10 right-10 bg-gray-800 text-white p-3 rounded-full shadow-lg transition-opacity duration-300"
-        style="display: none;">
-        ↑
+    <!-- Tombol Aksesibilitas -->
+    <button id="accessibility-btn"
+        class="fixed bottom-10 left-10 bg-blue-600 text-white p-3 rounded-full shadow-lg">
+        ♿
     </button>
+
+    <!-- Popup Menu Disabilitas -->
+    <div id="accessibility-menu"
+        class="fixed bottom-20 left-10 bg-white text-black p-4 rounded-lg shadow-lg hidden">
+        <h2 class="font-bold text-lg">Aksesibilitas</h2>
+        <button onclick="toggleSpeech()" class="mt-2 w-full bg-blue-600 text-white px-4 py-2 rounded">
+            <span id="speech-toggle-text">Aktifkan Bacaan</span>
+        </button>
+    </div>
 </footer>
+
+<script>
+    let isSpeechEnabled = false;
+    let speechSynthesisInstance = window.speechSynthesis;
+
+    // Toggle Popup Menu
+    document.getElementById('accessibility-btn').addEventListener('click', function () {
+        let menu = document.getElementById('accessibility-menu');
+        menu.classList.toggle('hidden');
+    });
+
+    // Toggle Teks ke Suara
+    function toggleSpeech() {
+        isSpeechEnabled = !isSpeechEnabled;
+        document.getElementById("speech-toggle-text").innerText = isSpeechEnabled ? "Matikan Bacaan" : "Aktifkan Bacaan";
+
+        if (!isSpeechEnabled) {
+            speechSynthesisInstance.cancel(); // Hentikan semua pembacaan jika dinonaktifkan
+        }
+    }
+
+    // Fungsi untuk membaca teks yang di-hover
+    function speakText(event) {
+        if (isSpeechEnabled) {
+            let text = event.target.innerText;
+            let speech = new SpeechSynthesisUtterance(text);
+            speech.lang = 'id-ID'; // Bahasa Indonesia
+            speech.rate = 1.0;
+            speechSynthesisInstance.speak(speech);
+        }
+    }
+
+    // Tambahkan event listener ke elemen yang bisa dibaca
+    document.querySelectorAll("h2, p, a, li").forEach(el => {
+        el.addEventListener("mouseenter", speakText);
+    });
+</script>
