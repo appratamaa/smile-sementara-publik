@@ -69,7 +69,7 @@
         </form>
 
         <p class="mt-4 text-center text-sm text-gray-600">Sudah punya akun? 
-            <a href="{{ route('adminLogin') }}" class="font-semibold text-red-600 hover:text-indigo-500">Masuk</a>
+            <a href="login" class="font-semibold text-red-600 hover:text-indigo-500">Masuk</a>
         </p>
     </div>
 </div>

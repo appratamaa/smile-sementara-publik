@@ -43,9 +43,16 @@
         
             <div>
                 <button type="submit" class="flex w-full justify-center rounded-md bg-black px-3 py-1.5 text-sm font-semibold 
-                    text-white shadow-xs hover:bg-gray-800">Sign in</button>
+                    text-white shadow-xs hover:bg-gray-800">Masuk</button>
+            </div>
+    
+            <!-- Teks "Belum punya akun?" di bawah tombol Masuk -->
+            <div class="mt-3 text-center text-sm text-gray-700">
+                Belum punya akun? 
+                <a href="registrasiAdmin" class="font-semibold text-black hover:text-indigo-500">Daftar</a>
             </div>
         </form>
+    
 
         @if (session('error'))
             <div class="text-red-500 text-sm mt-2">
