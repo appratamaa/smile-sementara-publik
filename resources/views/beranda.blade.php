@@ -61,13 +61,13 @@
                       <li class="mb-2">
                           <a href="#" @click="active = 'beranda'"
                               :class="active === 'beranda' ? 'bg-gray-500 text-white' : ''"
-                              class="block py-2 px-4 rounded hover:bg-blue-500 text-black">Beranda</a>
+                              class="block py-2 px-4 rounded hover:bg-blue-500 text-black">Rekam Medis</a>
                       </li>
-                      <li class="mb-2">
+                      {{-- <li class="mb-2">
                           <a href="/rekammedis" @click="active = 'rekam_medis'"
                               :class="active === 'rekam_medis' ? 'bg-gray-500 text-white' : ''"
                               class="block py-2 px-4 rounded hover:bg-blue-500 text-black">Rekam Medis</a>
-                      </li>
+                      </li> --}}
                       <li class="mb-2">
                           <a href="#" @click="active = 'profil'"
                               :class="active === 'profil' ? 'bg-gray-500 text-white' : ''"

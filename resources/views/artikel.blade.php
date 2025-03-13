@@ -33,15 +33,6 @@
                 
                 <!-- Filter & Switch Tampilan -->
                 <div class="mt-6 flex flex-wrap justify-between gap-4">
-                    <form method="GET" action="{{ url('/artikel') }}" class="flex gap-2">
-                        <select name="filter" class="border border-gray-300 px-4 py-2 rounded-md">
-                            <option value="">Semua</option>
-                            <option value="tahun" {{ request('filter') == 'tahun' ? 'selected' : '' }}>Tahun Ini</option>
-                            <option value="bulan" {{ request('filter') == 'bulan' ? 'selected' : '' }}>Bulan Ini</option>
-                            <option value="minggu" {{ request('filter') == 'minggu' ? 'selected' : '' }}>Minggu Ini</option>
-                        </select>
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Filter</button>
-                    </form>
                     <div x-data="{ gridView: true }">
                         <button @click="gridView = true" :class="{ 'bg-blue-500 text-white': gridView }" class="px-4 py-2 border rounded-md hover:bg-blue-500 hover:text-white">
                             <i class="fa-solid fa-th"></i> Grid
@@ -69,7 +60,7 @@
                 
                 <!-- Jika Tidak Ada Artikel -->
                 @if ($artikels->isEmpty())
-                    <p class="text-gray-600 text-center mt-6">Tidak ada artikel dengan filter yang dipilih.</p>
+                    <p class="text-gray-600 text-center mt-6">Tidak ada artikel yang tersedia.</p>
                 @endif
             </div>
         </main>

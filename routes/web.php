@@ -68,8 +68,7 @@ Route::get('/artikel', [ArtikelUserController::class, 'index'])->name('artikel.i
 Route::get('/artikel/cari', [ArtikelUserController::class, 'search'])->name('artikel.search');
 Route::get('/artikel/{id}', [ArtikelUserController::class, 'show'])->name('artikel.show');
 
-
-
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
 // Admin Routes
 Route::middleware(['auth'])->group(function () {
