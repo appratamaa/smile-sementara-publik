@@ -217,7 +217,63 @@
                     });
             
                     generateDateCards(currentMonth, currentYear);
+
+                    document.addEventListener("DOMContentLoaded", function () {
+    const carousel = document.getElementById("carousel");
+    const items = document.querySelectorAll(".carousel-item");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    
+    let index = 0;
+    const totalItems = items.length;
+    const itemWidth = items[0].offsetWidth + 16; // Tambahkan margin antara item
+    let autoSlide;
+
+    function updateCarousel() {
+        const offset = -index * itemWidth;
+        carousel.style.transform = `translateX(${offset}px)`;
+    }
+
+    function nextSlide() {
+        index = (index + 1) % totalItems; 
+        updateCarousel();
+    }
+
+    function prevSlide() {
+        index = (index - 1 + totalItems) % totalItems;
+        updateCarousel();
+    }
+
+    function startAutoSlide() {
+        autoSlide = setInterval(() => {
+            nextSlide();
+        }, 3000); // Ganti slide setiap 3 detik
+    }
+
+    function stopAutoSlide() {
+        clearInterval(autoSlide);
+    }
+
+    nextBtn.addEventListener("click", () => {
+        stopAutoSlide();
+        nextSlide();
+        startAutoSlide();
+    });
+
+    prevBtn.addEventListener("click", () => {
+        stopAutoSlide();
+        prevSlide();
+        startAutoSlide();
+    });
+
+    carousel.addEventListener("mouseenter", stopAutoSlide);
+    carousel.addEventListener("mouseleave", startAutoSlide);
+
+    startAutoSlide();
+});
+
                 </script>
+                
     </div>
 </body>
 </html>

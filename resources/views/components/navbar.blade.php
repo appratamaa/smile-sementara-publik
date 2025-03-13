@@ -1,20 +1,20 @@
-<nav class="bg-white transition-all duration-500 ease-in-out" 
-    x-data="{ isSticky: false, isOpen: false }"
-    :class="{ 'fixed top-0 w-full shadow-md z-50 backdrop-blur-md bg-white/50': isSticky }" 
-    x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 250 })">
+<nav class="bg-white transition-all duration-500 ease-in-out" x-data="{ isSticky: false, isOpen: false }"
+    :class="{ 'fixed top-0 w-full shadow-md z-50 backdrop-blur-md bg-white/50': isSticky }" x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 250 })">
 
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <img class="w-18 h-10" src="image/SMILE LOGO.png" alt="Your Company">
+                    <a href="/">
+                        <img class="w-18 h-16" src="image/SMILE-LOGO-4.svg" alt="SMILE">
+                    </a>
                 </div>
 
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <x-nav-link href="/" :active="request()->is('/')">Beranda</x-nav-link>
                         <x-nav-link href="/artikel" :active="request()->is('artikel')">Artikel</x-nav-link>
-                        <x-nav-link href="/chatdokter" :active="request()->is('chatdokter')">Chat Dokter</x-nav-link>
+                        <x-nav-link href="/chatdokter" :active="request()->is('chatdokter')">Hubungi Dokter</x-nav-link>
                         <x-nav-link href="/informasi" :active="request()->is('informasi')">Informasi</x-nav-link>
                         <x-nav-link href="/lainnya" :active="request()->is('lainnya')">Lainnya</x-nav-link>
                     </div>
@@ -89,15 +89,23 @@
                             </div>
                         </div> --}}
                     <div class="relative ml-12">
-                        <div>
-                            <button type="button" @click="window.location.href='/masuk'"
-                                class="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-                                id="login-button" aria-expanded="false" aria-haspopup="true">
-                                <span class="absolute -inset-1.5"></span>
-                                <span class="sr-only">Login</span>
-                                <span class="text-white">Login</span>
-                            </button>
-                        </div>
+                        <!-- Tombol Login -->
+                        <button type="button" @click="window.location.href='/masuk'"
+                            class="rounded-md border-2 border-blue-500 px-3 py-2 text-sm font-medium text-blue-500 bg-white rounded-lg transition duration-300 transform hover:scale-105 "
+                            id="login-button" aria-expanded="false" aria-haspopup="true">
+                            <span class="absolute -inset-1.5"></span>
+                            <span class="sr-only">Masuk</span>
+                            <span>Masuk</span>
+                        </button>
+
+                        <!-- Tombol Register -->
+                        <button type="button" @click="window.location.href='/daftar'"
+                            class="rounded-md border-2 border-blue-500  bg-blue-500 px-3 py-2 text-sm font-medium text-white rounded-lg transition duration-300 transform hover:scale-105 hover:bg-blue-600" id="register-button"
+                            aria-expanded="false" aria-haspopup="true">
+                            <span class="absolute -inset-1.5"></span>
+                            <span class="sr-only">Daftar</span>
+                            <span class="text-white">Daftar</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -193,7 +201,7 @@
                 class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white">Lainnya</a> --}}
             <x-nav-mob href="/" :active="request()->is('/')">Beranda</x-nav-mob>
             <x-nav-mob href="/artikel" :active="request()->is('artikel')">Artikel</x-nav-mob>
-            <x-nav-mob href="/chatdokter" :active="request()->is('chatdokter')">Chat Dokter</x-nav-mob>
+            <x-nav-mob href="/chatdokter" :active="request()->is('chatdokter')">Hubungi Dokter</x-nav-mob>
             <x-nav-mob href="/informasi" :active="request()->is('informasi')">Informasi</x-nav-mob>
             <x-nav-mob href="/lainnya" :active="request()->is('lainnya')">Lainnya</x-nav-mob>
         </div>
