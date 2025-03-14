@@ -1,11 +1,11 @@
 <nav class="bg-white transition-all duration-500 ease-in-out" x-data="{ isSticky: false, isOpen: false }"
     :class="{ 'fixed top-0 w-full shadow-md z-50 backdrop-blur-md bg-white/50': isSticky }" x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 250 })">
 
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 ">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-1 ">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <img class="w-18 h-16" src="image/SMILE-LOGO.svg" alt="SMILE">
+                    <img class="w-18 h-16" src="image/SMILE-LOGO-4.svg" alt="SMILE">
                 </div>
             </div>
             <div class="hidden md:block">
@@ -38,6 +38,8 @@
                                 selectedImage: '{{ $pengguna->foto_profil ?? 'https://via.placeholder.com/40' }}',
                                 isEditing: false,
                                 formData: {
+                                    usia: '{{ $pengguna->usia ?? '' }}',
+                                    jenis_kelamin: '{{ $pengguna->jenis_kelamin ?? '' }}',
                                     berat_badan: '{{ $pengguna->berat_badan ?? '' }}',
                                     tinggi_badan: '{{ $pengguna->tinggi_badan ?? '' }}',
                                     penyakit_genetik: '{{ $pengguna->penyakit_genetik ?? '' }}',
@@ -63,6 +65,8 @@
                                 <div x-show="!isEditing">
                                     <p class="text-black font-medium">Email: {{ $pengguna->email ?? '-' }}</p>
                                     <p class="text-black font-medium">Nomor Telepon: {{ $pengguna->nomor_hp ?? '-' }}</p>
+                                    <p class="text-black font-medium">Usia: <span x-text="formData.usia"></span> tahun</p>
+                                    <p class="text-black font-medium">Jenis Kelamin: <span x-text="formData.jenis_kelamin"></span></p>
                                     <p class="text-black font-medium">Berat Badan: <span x-text="formData.berat_badan"></span> kg</p>
                                     <p class="text-black font-medium">Tinggi Badan: <span x-text="formData.tinggi_badan"></span> cm</p>
                                     <p class="text-black font-medium">Penyakit Genetik: <span x-text="formData.penyakit_genetik"></span></p>
@@ -76,33 +80,53 @@
                                 <!-- Mode Edit -->
                                 <form x-show="isEditing" method="POST" action="{{ route('profile.update') }}" enctype="multipart/form-data">
                                     @csrf
-                                    @method('PATCH') <!-- Ubah PUT menjadi PATCH -->
-                    
-                                    <!-- Input Data Pribadi -->
+                                    @method('PATCH')
+                                
+                                    <!-- Usia -->
+                                    <div class="mb-2">
+                                        <label class="text-gray-600 text-sm">Usia:</label>
+                                        <input type="number" x-model="formData.usia" name="usia"
+                                            class="w-full border rounded-md px-2 py-1 text-black">
+                                    </div>
+                                
+                                    <!-- Jenis Kelamin -->
+                                    <div class="mb-2">
+                                        <label class="text-gray-600 text-sm">Jenis Kelamin:</label>
+                                        <select x-model="formData.jenis_kelamin" name="jenis_kelamin"
+                                            class="w-full border rounded-md px-2 py-1 text-black">
+                                            <option value="">Pilih</option>
+                                            <option value="Laki-laki">Laki-laki</option>
+                                            <option value="Perempuan">Perempuan</option>
+                                        </select>
+                                    </div>
+                                
+                                    <!-- Berat Badan -->
                                     <div class="mb-2">
                                         <label class="text-gray-600 text-sm">Berat Badan (kg):</label>
                                         <input type="number" x-model="formData.berat_badan" name="berat_badan"
                                             class="w-full border rounded-md px-2 py-1 text-black">
                                     </div>
-                    
+                                
+                                    <!-- Tinggi Badan -->
                                     <div class="mb-2">
                                         <label class="text-gray-600 text-sm">Tinggi Badan (cm):</label>
                                         <input type="number" x-model="formData.tinggi_badan" name="tinggi_badan"
                                             class="w-full border rounded-md px-2 py-1 text-black">
                                     </div>
-                    
+                                
+                                    <!-- Penyakit Genetik -->
                                     <div class="mb-2">
                                         <label class="text-gray-600 text-sm">Penyakit Genetik:</label>
                                         <input type="text" x-model="formData.penyakit_genetik" name="penyakit_genetik"
                                             class="w-full border rounded-md px-2 py-1 text-black">
                                     </div>
-                    
+                                
                                     <!-- Alamat -->
                                     <div class="mb-2">
                                         <label class="text-gray-600 text-sm">Alamat:</label>
                                         <textarea x-model="formData.alamat" name="alamat" class="w-full border rounded-md px-2 py-1 text-black"></textarea>
                                     </div>
-                    
+                                
                                     <!-- Tambah Foto Profil -->
                                     <div class="mb-2 text-center">
                                         <label class="cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
@@ -118,18 +142,18 @@
                                             ">
                                         </label>
                                     </div>
-                    
+                                
                                     <!-- Tombol Simpan -->
                                     <button type="submit"
                                         class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-md">
                                         Simpan
                                     </button>
-                    
+                                
                                     <button type="button" @click="isEditing = false"
                                         class="w-full bg-gray-400 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-md mt-2">
                                         Batal
                                     </button>
-                                </form>
+                                </form>                                
                     
                                 <!-- Tombol Logout -->
                                 <div class="mt-4">
@@ -143,8 +167,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    
+                    </div>                    
 
                     <div class="-mr-2 flex md:hidden">
                         <!-- Mobile menu button -->

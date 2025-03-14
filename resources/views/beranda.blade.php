@@ -19,70 +19,46 @@
         <div class="flex min-h-screen bg-gray-100">
             <!-- Sidebar -->
             <aside class="w-64 bg-white text-black p-4">
-              <div class="flex items-center justify-between mb-4">
-                  <h2 class="text-xl font-bold">Dashboard</h2>
-          
-                  <!-- Button Notifikasi -->
-                  <div x-data="{ open: false }" class="relative">
-                      <button @click="open = !open" type="button"
-                          class="relative rounded-full bg-gray-800 p-1.5 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-                          <span class="sr-only">Lihat Notifikasi</span>
-                          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                              <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
-                          </svg>
-                      </button>
-          
-                      <!-- Dropdown Notifikasi -->
-                      <div x-show="open" @click.away="open = false"
-                          class="absolute left-full top-0 ml-2 w-64 bg-white rounded-md shadow-lg z-50">
-                          <div class="py-2 px-4 border-b text-gray-700 font-semibold">Notifikasi</div>
-                          <div class="max-h-60 overflow-y-auto">
-                              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                  Notifikasi 1
-                                  <span class="block text-xs text-gray-500">1 jam yang lalu</span>
-                              </a>
-                              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                  Notifikasi 2
-                                  <span class="block text-xs text-gray-500">2 jam yang lalu</span>
-                              </a>
-                              <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                  Notifikasi 3
-                                  <span class="block text-xs text-gray-500">3 jam yang lalu</span>
-                              </a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          
-              <!-- Navigasi Sidebar -->
-              <nav>
-                  <ul x-data="{ active: 'beranda' }">
-                      <li class="mb-2">
-                          <a href="#" @click="active = 'beranda'"
-                              :class="active === 'beranda' ? 'bg-gray-500 text-white' : ''"
-                              class="block py-2 px-4 rounded hover:bg-blue-500 text-black">Rekam Medis</a>
-                      </li>
-                      {{-- <li class="mb-2">
-                          <a href="/rekammedis" @click="active = 'rekam_medis'"
-                              :class="active === 'rekam_medis' ? 'bg-gray-500 text-white' : ''"
-                              class="block py-2 px-4 rounded hover:bg-blue-500 text-black">Rekam Medis</a>
-                      </li> --}}
-                      <li class="mb-2">
-                          <a href="#" @click="active = 'profil'"
-                              :class="active === 'profil' ? 'bg-gray-500 text-white' : ''"
-                              class="block py-2 px-4 rounded hover:bg-blue-500 text-black">Profil</a>
-                      </li>
-                      <li>
-                          <a href="#" @click="active = 'keluar'"
-                              :class="active === 'keluar' ? 'bg-gray-500 text-white' : ''"
-                              class="block py-2 px-4 rounded hover:bg-blue-500 text-black">Keluar</a>
-                      </li>
-                  </ul>
-              </nav>
-          </aside>
-          
-          
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold">Dashboard</h2>
+
+                    <!-- Button Notifikasi -->
+                    <div x-data="{ open: false }" class="relative">
+                        <button @click="open = !open" type="button"
+                            class="relative rounded-full  p-1.5 text-black hover:text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-black">
+                            <span class="sr-only">Lihat Notifikasi</span>
+                            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown Notifikasi -->
+                        <div x-show="open" @click.away="open = false"
+                            class="absolute left-full top-0 ml-2 w-64 bg-white rounded-md shadow-lg z-50">
+                            <div class="py-2 px-4 border-b text-black font-semibold">Notifikasi</div>
+                            <div class="max-h-60 overflow-y-auto">
+                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    Notifikasi 1
+                                    <span class="block text-xs text-gray-500">1 jam yang lalu</span>
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    Notifikasi 2
+                                    <span class="block text-xs text-gray-500">2 jam yang lalu</span>
+                                </a>
+                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                                    Notifikasi 3
+                                    <span class="block text-xs text-gray-500">3 jam yang lalu</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <x-side-bar>
+                </x-side-bar>
+            </aside>
+
 
 
             <!-- Main Content -->
@@ -92,8 +68,7 @@
                 <main class="p-6">
                     <div class="bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-semibold mb-4">Selamat Datang</h3>
-                        <p class="text-gray-700">Ini adalah dashboard sederhana untuk melihat informasi rekam medis
-                            Anda.</p>
+                        <p class="text-gray-700">Lengkapi profil Anda untuk menikmati layanan terbaik kami.</p>
                     </div>
 
                     <!-- Informasi Data -->
@@ -103,12 +78,12 @@
                             <p class="text-2xl font-bold text-blue-600">120</p>
                         </div>
                         <div class="bg-white p-4 rounded-lg border border-gray-300">
-                            <h4 class="text-lg font-semibold">Janji Temu</h4>
+                            <h4 class="text-lg font-semibold">Antrian Anda</h4>
                             <p class="text-2xl font-bold text-green-600">15</p>
                         </div>
                         <div class="bg-white p-4 rounded-lg border border-gray-300">
-                            <h4 class="text-lg font-semibold">Data Tersimpan</h4>
-                            <p class="text-2xl font-bold text-red-600">98%</p>
+                            <h4 class="text-lg font-semibold">Sisa Antrian</h4>
+                            <p class="text-2xl font-bold text-red-600">7</p>
                         </div>
                     </div>
                     <!-- Riwayat Kunjungan -->
@@ -160,7 +135,10 @@
             </div>
         </div>
     </div>
+
+
+    <x-footer>
+    </x-footer>
 </body>
 
-<x-footer>
-</x-footer>
+</html>

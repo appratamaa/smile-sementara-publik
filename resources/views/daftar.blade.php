@@ -80,7 +80,7 @@
 
                     <div>
                         <button type="submit"
-                            class="flex w-full justify-center px-3 py-1.5 text-white font-semibold bg-blue-500 rounded-md ">
+                            class="flex w-full justify-center px-3 py-1.5 text-white font-semibold bg-blue-500 rounded-md transition duration-300 transform hover:scale-105 hover:bg-blue-600">
                             Daftar
                         </button>
                     </div>

@@ -55,7 +55,7 @@
                   </div>                  
 
                     <div>
-                        <button type="submit" class="w-full bg-blue-500 text-white px-3 py-1.5 rounded-md">Masuk</button>
+                        <button type="submit" class="w-full bg-blue-500 text-white px-3 py-1.5 rounded-md transition duration-300 transform hover:scale-105 hover:bg-blue-600">Masuk</button>
                     </div>
 
                     @if ($errors->has('login'))
