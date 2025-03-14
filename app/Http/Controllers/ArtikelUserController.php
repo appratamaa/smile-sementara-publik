@@ -8,15 +8,11 @@ use Illuminate\Http\Request;
 class ArtikelUserController extends Controller
 {
     public function index()
-    {
-        $artikels = ArtikelUser::latest()->get(); 
-        
-        if ($artikels->isEmpty()) {
-            return "Tidak ada data artikel yang ditemukan!";
-        }
+{
+    $artikels = ArtikelUser::latest()->get();
+    return view('artikel', compact('artikels')); // Pastikan tetap merender tampilan
+}
 
-        return view('artikel', compact('artikels'));
-    }
 
     public function welcome()
     {

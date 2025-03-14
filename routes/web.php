@@ -69,8 +69,13 @@ Route::get('/artikel/cari', [ArtikelUserController::class, 'search'])->name('art
 Route::get('/artikel/{id}', [ArtikelUserController::class, 'show'])->name('artikel.show');
 Route::get('/welcome', [ArtikelUserController::class, 'welcome'])->name('welcome');
 
-
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+Route::get('/profil', function () {
+    $pengguna = session('pengguna'); // Ambil data pengguna dari sesi
+    return view('profil', compact('pengguna'));
+})->name('profil');
+
 
 
 

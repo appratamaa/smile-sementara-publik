@@ -9,6 +9,5 @@ class Appointment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama', 'tanggal', 'tujuan'];
+    protected $fillable = ['nama', 'usia', 'jenis_kelamin', 'alamat', 'tanggal', 'tujuan'];
 }
-
