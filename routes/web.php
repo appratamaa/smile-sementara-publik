@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\View;
 
 // User Routes
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/welcome');
 });
 
 Route::get('/masuk', function () {
@@ -67,6 +67,8 @@ Route::get('/antrean/{id}', [AppointmentController::class, 'show'])->name('antre
 Route::get('/artikel', [ArtikelUserController::class, 'index'])->name('artikel.index');
 Route::get('/artikel/cari', [ArtikelUserController::class, 'search'])->name('artikel.search');
 Route::get('/artikel/{id}', [ArtikelUserController::class, 'show'])->name('artikel.show');
+Route::get('/welcome', [ArtikelUserController::class, 'welcome'])->name('welcome');
+
 
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 

@@ -9,16 +9,27 @@ class ArtikelUserController extends Controller
 {
     public function index()
     {
-        // Ambil semua artikel terbaru
         $artikels = ArtikelUser::latest()->get(); 
+        
+        if ($artikels->isEmpty()) {
+            return "Tidak ada data artikel yang ditemukan!";
+        }
+
         return view('artikel', compact('artikels'));
+    }
+
+    public function welcome()
+    {
+        // Ambil 6 artikel terbaru untuk ditampilkan di halaman welcome
+        $artikels = ArtikelUser::latest()->take(6)->get(); 
+
+        return view('welcome', compact('artikels'));
     }
 
     public function show($id)
     {
         $artikel = ArtikelUser::findOrFail($id);
 
-        // Ambil artikel lain yang tidak sama dengan artikel saat ini (misalnya 5 artikel terkait)
         $relatedArticles = ArtikelUser::where('id_artikel', '!=', $id)
             ->latest()
             ->take(5)
@@ -29,13 +40,12 @@ class ArtikelUserController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = trim($request->input('keyword')); // Menghapus spasi di awal & akhir
+        $keyword = trim($request->input('keyword')); 
 
         if (empty($keyword)) {
             return redirect()->route('artikel.index')->with('error', 'Masukkan kata kunci untuk mencari artikel.');
         }
 
-        // Cari artikel berdasarkan judul_artikel yang mengandung keyword
         $artikels = ArtikelUser::where('judul_artikel', 'LIKE', "%$keyword%")->latest()->get();
 
         return view('artikel', compact('artikels'))->with('keyword', $keyword);
