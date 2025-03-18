@@ -26,7 +26,7 @@
         <div class="flex w-full md:w-1/2 flex-col justify-center px-6 py-12 lg:px-8">
             <div class="sm:mx-auto sm:w-full sm:max-w-sm">
                 <a href="/">
-                <img class="mx-auto h-20 w-auto" src="image/SMILE-LOGO-4.svg" alt="SMILE">
+                <img class="mx-auto h-20 w-auto" src="image/SMILE-LOGO-5.svg" alt="SMILE">
                 </a>
                 <h2 class="mt-5 text-center text-2xl/9 font-bold tracking-tight text-gray-900">Masuk</h2>
                 <h3 class="mt-2 text-center tracking-tight text-gray-600">Selamat datang di <b>Smile!</b><br> Masuk
