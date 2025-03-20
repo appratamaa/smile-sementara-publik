@@ -5,7 +5,7 @@
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <img class="w-18 h-16" src="image/SMILE-LOGO-4.svg" alt="SMILE">
+                    <img class="w-18 h-16" src="image/SMILE-LOGO-5.svg" alt="SMILE">
                 </div>
             </div>
             <div class="hidden md:block">

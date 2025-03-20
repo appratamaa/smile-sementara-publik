@@ -6,7 +6,7 @@
             <div class="flex items-center">
                 <div class="shrink-0">
                     <a href="/">
-                        <img class="w-18 h-16" src="image/SMILE-LOGO-4.svg" alt="SMILE">
+                        <img class="w-18 h-16" src="image/SMILE-LOGO-5.svg" alt="SMILE">
                     </a>
                 </div>
 
@@ -91,7 +91,7 @@
                     <div class="relative ml-12">
                         <!-- Tombol Login -->
                         <button type="button" @click="window.location.href='/masuk'"
-                            class="rounded-md border-2 border-blue-500 px-3 py-2 text-sm font-medium text-blue-500 bg-white rounded-lg transition duration-300 transform hover:scale-105 "
+                            class="rounded-md border-2 border-blue-500 px-3 py-2 text-sm font-medium text-blue-500 bg-transparent rounded-lg transition duration-300 transform hover:scale-105 "
                             id="login-button" aria-expanded="false" aria-haspopup="true">
                             <span class="absolute -inset-1.5"></span>
                             <span class="sr-only">Masuk</span>

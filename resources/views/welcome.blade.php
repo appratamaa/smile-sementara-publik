@@ -182,6 +182,7 @@
                             </a>
                         </div>
                     </div>
+                </div>
             </div>
 
             <!-- Profil Dokter Gigi -->
@@ -294,28 +295,58 @@
             <div class="bg-white py-12">
                 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8" data-aos="fade-up">
                     <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Buat Janji Temu</h2>
-                    <form id="appointmentForm" action="{{ route('appointments.store') }}" method="POST"
-                        class="bg-white p-8 rounded-lg shadow-2xl transition duration-300 hover:shadow-3xl">
+                    <form id="appointmentForm" action="{{ route('appointments.store') }}" method="POST">
                         @csrf
-                        <div class="mb-6">
-                            <label for="nama" class="block text-lg font-medium text-gray-700 mb-2">Nama
-                                Lengkap</label>
+        
+                        <!-- Nama -->
+                        <div class="mb-3">
+                            <label for="nama" class="block text-gray-700 text-sm">Nama Lengkap</label>
                             <input type="text" name="nama" id="nama"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-blue-300 focus:border-blue-400 transition duration-300 outline-none"
+                                class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 placeholder="Masukkan nama Anda" required>
                         </div>
-                        <div class="mb-6">
-                            <label for="tanggal" class="block text-lg font-medium text-gray-700 mb-2">Tanggal</label>
+        
+                        <!-- Usia & Jenis Kelamin -->
+                        <div class="flex gap-2">
+                            <div class="w-1/2">
+                                <label for="usia" class="block text-gray-700 text-sm">Usia</label>
+                                <input type="number" name="usia" id="usia"
+                                    class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                    placeholder="Usia" min="0" required>
+                            </div>
+                            <div class="w-1/2">
+                                <label for="jenis_kelamin" class="block text-gray-700 text-sm">Jenis Kelamin</label>
+                                <select name="jenis_kelamin" id="jenis_kelamin"
+                                    class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                    required>
+                                    <option value="">Pilih</option>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+                        </div>
+        
+                        <!-- Alamat -->
+                        <div class="mb-3">
+                            <label for="alamat" class="block text-gray-700 text-sm">Alamat Singkat</label>
+                            <input type="text" name="alamat" id="alamat"
+                                class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                                placeholder="Alamat Anda" required>
+                        </div>
+        
+                        <!-- Tanggal & Tujuan -->
+                        <div class="mb-3">
+                            <label for="tanggal" class="block text-gray-700 text-sm">Tanggal</label>
                             <input type="date" name="tanggal" id="tanggal"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-blue-300 focus:border-blue-400 transition duration-300 outline-none"
+                                class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 required>
                         </div>
-                        <div class="mb-6">
-                            <label for="tujuan" class="block text-lg font-medium text-gray-700 mb-2">Tujuan</label>
+        
+                        <div class="mb-4">
+                            <label for="tujuan" class="block text-gray-700 text-sm">Tujuan</label>
                             <select name="tujuan" id="tujuan"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-4 focus:ring-blue-300 focus:border-blue-400 transition duration-300 outline-none"
+                                class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 required>
-                                <option value="" disabled selected>Pilih Tujuan Anda</option>
                                 <option>Pemeriksaan Rutin</option>
                                 <option>Cabut Gigi</option>
                                 <option>Pasang Behel</option>
@@ -325,8 +356,10 @@
                                 <option>Perawatan Saluran Akar</option>
                             </select>
                         </div>
+        
+                        <!-- Tombol Submit -->
                         <button type="submit"
-                            class="w-full bg-blue-500 text-white text-lg font-semibold py-3 rounded-lg transition duration-300 transform hover:scale-105 hover:bg-blue-600">
+                            class="w-full bg-blue-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">
                             Buat Janji
                         </button>
                     </form>
