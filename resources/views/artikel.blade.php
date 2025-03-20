@@ -47,16 +47,18 @@
                 <div class="mt-6" x-show="gridView">
                     <div class="mb-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($artikels as $artikel)
-                            <a href="{{ url('/artikel/' . $artikel->id_artikel) }}" class="block bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
-                                <img src="data:image/jpeg;base64,{{ base64_encode($artikel->gambar) }}" alt="{{ $artikel->judul_artikel }}" class="w-full h-40 object-cover rounded-t-lg">
+                            <a href="{{ url('/artikel/' . $artikel['id_artikel']) }}" class="block bg-white shadow-md rounded-lg p-4 hover:shadow-lg transition">
+                                <img src="{{ asset('gambar_artikel/' . $artikel['gambar']) }}" alt="{{ $artikel['judul_artikel'] }}" class="w-full h-40 object-cover rounded-t-lg">
                                 <div class="mt-4">
-                                    <h3 class="text-lg font-bold">{{ $artikel->judul_artikel }}</h3>
-                                    <p class="mt-2 text-gray-600">{{ Str::limit($artikel->deskripsi_artikel, 120) }}</p>
+                                    <h3 class="text-lg font-bold">{{ $artikel['judul_artikel'] }}</h3>
+                                    <p class="mt-2 text-gray-600">{{ Str::limit($artikel['deskripsi_artikel'], 120) }}</p>
                                 </div>
                             </a>
                         @endforeach
                     </div>
                 </div>
+
+
                 
                 <!-- Jika Tidak Ada Artikel -->
                 @if ($artikels->isEmpty())

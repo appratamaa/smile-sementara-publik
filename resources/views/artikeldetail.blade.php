@@ -23,7 +23,7 @@
             <p class="text-gray-500 text-sm mt-1">{{ date('d M Y', strtotime($artikel->created_at)) }}</p>
 
             <!-- Gambar Artikel -->
-            <img src="{{ asset('storage/' . $artikel->gambar) }}" alt="{{ $artikel->judul_artikel }}"
+            <img src="{{ asset('gambar_artikel/' . $artikel['gambar']) }}" alt="{{ $artikel->judul_artikel }}"
                 class="w-full h-80 object-cover rounded-lg mt-4 shadow-md">
 
             <!-- Deskripsi Artikel -->
