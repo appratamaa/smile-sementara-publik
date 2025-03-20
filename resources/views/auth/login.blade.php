@@ -11,7 +11,7 @@
 
 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img src="{{ asset('image/SMILE LOGO.png') }}" alt="Smile logo" class="mx-auto h-10 w-auto mt-20">
+        <img src="{{ asset('image/SMILE-LOGO-4.svg') }}" alt="Smile logo" class="mx-auto h-20 w-auto mt-20">
         <h2 class="mt-5 text-center text-2xl font-bold tracking-tight text-gray-900">MASUK</h2>
     </div>
   

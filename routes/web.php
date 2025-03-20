@@ -83,7 +83,7 @@ Route::get('/profil', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminArtikel', [ArtikelController::class, 'index'])->name('adminArtikel');
     Route::post('/adminArtikel', [ArtikelController::class, 'store'])->name('artikel.store');
-    Route::view('/adminAntrian', 'admin.adminPraktik');
+    Route::view('/admin/Antrian', 'admin.adminPraktik');
     Route::view('/admin/rekam-medis', 'admin.adminRemed');
     Route::view('/adminPraktik', 'admin.adminPraktik');
     Route::view('/dataantrian', 'admin.dataAntrian');

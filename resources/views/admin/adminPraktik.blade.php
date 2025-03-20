@@ -11,7 +11,7 @@
     <!-- Sidebar -->
     <div class="w-64 bg-white shadow-md p-4 flex flex-col h-full">
         <h1 class="text-left mb-4">
-            <img src="{{ asset('image/SMILE LOGO.png') }}" alt="Smile logo" class="h-10">
+            <img src="{{ asset('image/SMILE-LOGO.svg') }}" alt="Smile logo" class="h-10">
         </h1>
         <ul class="space-y-2 flex-grow">
             <li><a href="/adminArtikel" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Artikel</a></li>
@@ -139,23 +139,7 @@
             const appointmentTable = document.getElementById('appointmentTable');
 
             // Menampilkan daftar janji temu
-            appointments.forEach((appointment, index) => {
-                const row = document.createElement('tr');
-                row.classList.add('border-b');
-                row.innerHTML = `
-                    <td class="border border-gray-300 p-2">${index + 1}</td>
-                    <td class="border border-gray-300 p-2">${appointment.nama}</td>
-                    <td class="border border-gray-300 p-2">${appointment.dokter}</td>
-                    <td class="border border-gray-300 p-2">${appointment.tanggal}</td>
-                    <td class="border border-gray-300 p-2">${appointment.waktu}</td> <!-- Kolom jam ditambahkan -->
-                    <td class="border border-gray-300 p-2">${appointment.status}</td>
-                    <td class="border border-gray-300 p-2">
-                        <button onclick="approveAppointment(${index})" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Setuju</button>
-                        <button onclick="rejectAppointment(${index})" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Tolak</button>
-                    </td>
-                `;
-                appointmentTable.appendChild(row);
-            });
+            
         };
 
         function approveAppointment(index) {

@@ -11,7 +11,7 @@
     <!-- Sidebar -->
     <div class="w-64 bg-white shadow-md p-4 flex flex-col h-full">
         <h1 class="text-left mb-4">
-            <img src="{{ asset('image/SMILE LOGO.png') }}" alt="Smile logo" class="h-10">
+            <img src="{{ asset('image/SMILE-LOGO.svg') }}" alt="Smile logo" class="h-10">
         </h1>
         <ul class="space-y-2 flex-grow">
             <li><a href="/adminArtikel" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Artikel</a></li>
