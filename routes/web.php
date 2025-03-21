@@ -12,6 +12,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
 use Illuminate\Support\Facades\View;
 use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\JadwalPraktikController;
 
 // User Routes
 Route::get('/', function () {
@@ -89,21 +90,23 @@ Route::middleware(['auth'])->group(function () {
     Route::view('/admin/Antrian', 'admin.adminPraktik');
     Route::view('/adminInformasi', 'admin.adminInformasi');
     Route::view('/adminAntrian', 'admin.adminAntrian');
-    Route::view('/dataantrian', 'admin.dataAntrian');
     Route::view('/tes', 'admin.tesData');
-    Route::view('/praktik', 'admin.jadwalPraktik');
+    Route::post('/praktik', [JadwalPraktikController::class, 'store'])->name('jadwal.store');
+    Route::get('/praktik', [JadwalPraktikController::class, 'index'])->name('jadwal.index');
+    Route::delete('/praktik/{id}', [JadwalPraktikController::class, 'destroy'])->name('jadwal.destroy');
+    Route::put('/praktik/{id}', [JadwalPraktikController::class, 'update'])->name('jadwal.update'); // ✅ Route Update
 });
 
 // Authentication Routes
-Route::get('/adminLogin', [AdminController::class, 'showLogin'])->name('adminLogin');
-Route::post('/adminLogin', [AdminController::class, 'adminLogin']);
+Route::get('/Login', [AdminController::class, 'showLogin'])->name('adminLogin');
+Route::post('/Login', [AdminController::class, 'adminLogin']);
 
 Route::get('/registrasiAdmin', [AdminController::class, 'showRegistrasi'])->name('registrasiAdmin');
 Route::post('/registrasiAdmin', [AdminController::class, 'registrasiAdmin']);
 
 // Dashboard Redirect
 //origin/admin
-Route::get('/dashboard', function () {
+Route::get('/login', function () {
     return redirect()->route('adminArtikel');
 })->middleware(['auth', 'verified'])->name('dashboard');
 

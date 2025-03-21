@@ -17,7 +17,7 @@
             <li><a href="/adminArtikel" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Artikel</a></li>
             <li><a href="/adminAntrian" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Antrian</a></li>
             <li><a href="/adminInformasi" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Informasi</a></li>
-            <li><a href="/adminPraktik" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Praktik</a></li>
+            <li><a href="/praktik" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Praktik</a></li>
             <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Chat</a></li>
         </ul>
         <form method="POST" action="{{ route('logout') }}">
@@ -63,7 +63,7 @@
         <!-- Form Tambah Jadwal -->
         <div class="bg-white shadow-md p-6 rounded">
             <h2 class="text-xl font-semibold mb-4">Tambah Jadwal Praktik</h2>
-            <form id="addScheduleForm" action="{{ route('jadwal.store') }}" method="POST">
+            <form id="addScheduleForm" action="#" method="POST">
                 @csrf
                 <div class="grid grid-cols-2 gap-4">
                     <div>

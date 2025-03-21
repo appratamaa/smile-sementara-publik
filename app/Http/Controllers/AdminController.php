@@ -32,15 +32,14 @@ class AdminController extends Controller
         ]);
 
         // Simpan ke database
-        $admin = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'admin', // Pastikan ada kolom role di database
         ]);
 
-        // Login otomatis setelah registrasi
-        Auth::login($admin);
+        
 
         // Redirect ke halaman adminArtikel
         return redirect()->route('adminArtikel')->with('success', 'Registrasi berhasil, selamat datang di halaman admin!');
