@@ -31,10 +31,13 @@
                 <div class="flex items-center justify-between">
                     <label for="password" class="block text-sm font-medium text-gray-900">Password</label>
                 </div>
-                <div class="mt-2">
+                <div class="mt-2 relative">
                     <input type="password" name="password" id="password" required 
                         class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 outline-gray-300 
                         placeholder:text-gray-400 focus:outline-2 focus:outline-indigo-600 sm:text-sm">
+                        <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 flex items-center px-3">
+                            <img src="{{ asset('image/liat.png') }}" alt="Show Password" id="eyeIcon" class="h-5 w-5">
+                        </button>
                 </div>
                 <div class="text-sm">
                     <a href="#" class="font-semibold text-red-600 hover:text-indigo-500">Lupa kata sandi?</a>
@@ -61,6 +64,21 @@
         @endif
     </div>
 </div>
+
+<script>
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        let passwordInput = document.getElementById('password');
+        let eyeIcon = document.getElementById('eyeIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.src = "{{ asset('image/liat.png') }}"; // Ganti ikon saat password terlihat
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.src = "{{ asset('image/tutup.png') }}"; // Kembali ke ikon default
+        }
+    });
+</script>
 
 </body>
 </html>

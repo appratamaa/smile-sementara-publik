@@ -63,19 +63,20 @@
         <!-- Form Tambah Jadwal -->
         <div class="bg-white shadow-md p-6 rounded">
             <h2 class="text-xl font-semibold mb-4">Tambah Jadwal Praktik</h2>
-            <form id="addScheduleForm">
+            <form id="addScheduleForm" action="{{ route('jadwal.store') }}" method="POST">
+                @csrf
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block text-sm font-medium">Tanggal</label>
-                        <input type="tanggal" id="date" class="mt-1 p-2 w-full border rounded">
+                        <input type="date" name="tanggal" class="mt-1 p-2 w-full border rounded">
                     </div>
                     <div>
                         <label class="block text-sm font-medium">Waktu</label>
-                        <input type="waktu" id="time" class="mt-1 p-2 w-full border rounded">
+                        <input type="time" name="waktu" class="mt-1 p-2 w-full border rounded">
                     </div>
                 </div>
                 <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Tambah Jadwal</button>
-            </form>
+            </form>            
         </div>
 
         <!-- Tabel Jadwal -->
@@ -99,42 +100,12 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-    const form = document.getElementById("addScheduleForm");
-    
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        
-        const date = document.getElementById("date").value;
-        const time = document.getElementById("time").value;
-        
-        const data = { tanggal: date, waktu: time };
-        
-        fetch("/api/jadwal", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert("Jadwal berhasil ditambahkan!");
-            loadSchedule();
-        })
-        .catch(error => console.error("Error:", error));
-    });
-    
-    function loadSchedule() {
-        fetch("/api/jadwal")
-            .then(response => response.json())
-            .then(data => {
-                console.log("Jadwal Praktik:", data);
-            })
-            .catch(error => console.error("Error:", error));
-    }
-    
-    loadSchedule();
-});
-
+        document.querySelectorAll('.w-64 a').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.w-64 a').forEach(link => link.classList.remove('bg-black', 'text-white'));
+                this.classList.add('bg-black', 'text-white');
+            });
+        });
     </script>
 
 </body>
