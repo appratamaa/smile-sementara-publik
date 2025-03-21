@@ -168,7 +168,7 @@
                                         {{ Str::limit($artikel->deskripsi_artikel, 60, '...') }}</p>
                                     <p class="text-xs text-gray-400">
                                         {{ \Carbon\Carbon::parse($artikel->created_at)->format('d F Y') }}</p>
-                                    <img src="{{ asset('image/' . $artikel->gambar) }}"
+                                    <img src="{{ asset('gambar_artikel/' . $artikel['gambar']) }}"
                                         alt="{{ $artikel->judul_artikel }}" class="rounded-md mt-2">
                                 </div>
                             @endforeach

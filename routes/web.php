@@ -11,6 +11,7 @@ use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
 use Illuminate\Support\Facades\View;
+use App\Http\Controllers\InformasiController;
 
 // User Routes
 Route::get('/', function () {
@@ -83,9 +84,11 @@ Route::get('/profil', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/adminArtikel', [ArtikelController::class, 'index'])->name('adminArtikel');
     Route::post('/adminArtikel', [ArtikelController::class, 'store'])->name('artikel.store');
+    Route::get('/adminInformasi', [InformasiController::class, 'index'])->name('admin.informasi.index');
+    Route::post('/adminInformasi/store', [InformasiController::class, 'store'])->name('informasi.store');
     Route::view('/admin/Antrian', 'admin.adminPraktik');
-    Route::view('/admin/rekam-medis', 'admin.adminRemed');
-    Route::view('/adminPraktik', 'admin.adminPraktik');
+    Route::view('/adminInformasi', 'admin.adminInformasi');
+    Route::view('/adminAntrian', 'admin.adminAntrian');
     Route::view('/dataantrian', 'admin.dataAntrian');
     Route::view('/tes', 'admin.tesData');
     Route::view('/praktik', 'admin.jadwalPraktik');

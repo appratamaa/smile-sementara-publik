@@ -5,19 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Artikel Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-
 </head>
 <body class="bg-gray-100 h-screen flex">
+
     <!-- Sidebar -->
     <div class="w-64 bg-white shadow-md p-4 flex flex-col h-full">
         <h1 class="text-left mb-4">
-            <img src="{{ asset('image/SMILE-LOGO.svg') }}" alt="Smile logo" class="h-10">
+            <img src="image/SMILE-LOGO.svg" alt="Smile logo" class="h-10">
         </h1>
         <ul class="space-y-2 flex-grow">
             <li><a href="/adminArtikel" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Artikel</a></li>
-            <li><a href="/admin/antrian" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Antrian</a></li>
-            <li><a href="/admin/rekam-medis" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Rekam Medis</a></li>
+            <li><a href="/adminAntrian" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Antrian</a></li>
+            <li><a href="/admin/informasi" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">informasi</a></li>
             <li><a href="/adminPraktik" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Praktik</a></li>
             <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Chat</a></li>
         </ul>
@@ -28,10 +27,11 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 p-6">
-
-        <div class="flex justify-between items-center bg-white p-4 shadow-md rounded-lg mb-4">
-            <h2 class="text-2xl font-semibold">Rekam Medis</h2>
+    <div class="flex-1 p-6 flex flex-col">
+        
+        <!-- Navbar -->
+        <div class="flex justify-between items-center bg-white p-4 shadow-md rounded-lg">
+            <h2 class="text-2xl font-semibold">Artikel Admin</h2>
 
             <!-- Profile Section -->
             <div class="flex items-center space-x-4">
@@ -41,25 +41,31 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- Form Input -->
-        <div class="bg-white shadow-md p-6 rounded">
+        <div class="bg-white shadow-md p-6 rounded mt-4">
             <h2 class="text-xl font-semibold mb-4">Form Input</h2>
-            <form>
+            <form action="{{ route('artikel.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
                 <div class="mb-4">
                     <label for="judulArtikel" class="block text-gray-700">Judul Artikel</label>
-                    <input type="text" id="judulArtikel" class="w-full p-2 border rounded mt-1" placeholder="Masukkan Judul">
+                    <input type="text" name="judul_artikel" id="judulArtikel" class="w-full p-2 border rounded mt-1" required>
                 </div>
+            
                 <div class="mb-4">
                     <label for="deskripsiArtikel" class="block text-gray-700">Deskripsi</label>
-                    <input type="text" id="deskripsiArtikel" class="w-full p-2 border rounded mt-1" placeholder="Masukkan Deskripsi">
+                    <textarea name="deskripsi_artikel" id="deskripsiArtikel" class="w-full p-2 border rounded mt-1" rows="3" required></textarea>
                 </div>
+            
                 <div class="mb-4">
-                    <label for="pesanArtikel" class="block text-gray-700">Pesan</label>
-                    <textarea id="pesanArtikel" class="w-full p-2 border rounded mt-1" rows="3" placeholder="Tulis pesan"></textarea>
+                    <label for="gambarArtikel" class="block text-gray-700">Upload Gambar</label>
+                    <input type="file" name="gambar" id="gambarArtikel" class="w-full p-2 border rounded mt-1">
                 </div>
+            
                 <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Kirim</button>
             </form>
+            
+            
         </div>
     </div>
 
@@ -71,5 +77,6 @@
             });
         });
     </script>
+
 </body>
 </html>
