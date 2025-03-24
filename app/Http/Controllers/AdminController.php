@@ -10,19 +10,19 @@ use Illuminate\Support\Facades\Hash;
 class AdminController extends Controller
 {
     // Menampilkan halaman registrasi admin
-    public function showRegistrasi()
+    public function showRegister()
     {
-        return view('adminRegistrasi');
+        return view('admin.register');
     }
 
     // Menampilkan halaman login admin
     public function showLogin()
     {
-        return view('adminLogin');
+        return view('admin.login');
     }
 
     // Menangani proses registrasi admin
-    public function registrasiAdmin(Request $request)
+    public function registerAdmin(Request $request)
     {
         // Validasi input
         $request->validate([
@@ -31,42 +31,43 @@ class AdminController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        // Simpan ke database
+        // Simpan ke database dengan Hash::make()
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'admin', // Pastikan ada kolom role di database
         ]);
 
-        
-
-        // Redirect ke halaman adminArtikel
-        return redirect()->route('adminArtikel')->with('success', 'Registrasi berhasil, selamat datang di halaman admin!');
+        // Flash message dan redirect ke halaman login
+        return redirect()->route('adminLogin')->with('success', 'Registrasi berhasil! Silakan login.');
     }
 
     // Menangani proses login admin
     public function adminLogin(Request $request)
     {
-        // Validasi input
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        // Coba melakukan autentikasi
-        if (Auth::attempt($credentials)) {
-            // Regenerasi session untuk keamanan
-            $request->session()->regenerate();
-
-            // Redirect ke dashboard admin
-            return redirect()->route('adminArtikel');
+        // Cek apakah email ada di database
+        $user = User::where('email', $request->email)->first();
+        if (!$user) {
+            return back()->withErrors(['email' => 'Email tidak terdaftar!'])->with('error', 'Email tidak ditemukan!');
         }
 
-        // Jika gagal, kembali ke halaman login dengan pesan error
-        return back()->withErrors([
-            'email' => 'Email atau password salah!',
-        ])->onlyInput('email');
+        // Cek apakah password cocok dengan hash di database
+        if (!Hash::check($request->password, $user->password)) {
+            return back()->withErrors(['password' => 'Password salah!'])->with('error', 'Password yang Anda masukkan salah.');
+        }
+
+        // Jika autentikasi berhasil
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('adminArtikel')->with('success', 'Login berhasil! Selamat datang, ' . Auth::user()->name);
+        }
+
+        return back()->withErrors(['email' => 'Terjadi kesalahan pada login!'])->with('error', 'Login gagal. Coba lagi.');
     }
 
     // Menangani proses logout admin
@@ -75,6 +76,6 @@ class AdminController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect('/adminLogin')->with('success', 'Anda telah logout.');
+        return redirect()->route('adminLogin')->with('success', 'Anda telah logout.');
     }
 }

@@ -82,7 +82,7 @@ Route::get('/profil', function () {
 
 
 // Admin Routes
-Route::middleware(['auth'])->group(function () {
+
     Route::get('/adminArtikel', [ArtikelController::class, 'index'])->name('adminArtikel');
     Route::post('/adminArtikel', [ArtikelController::class, 'store'])->name('artikel.store');
     Route::get('/adminInformasi', [InformasiController::class, 'index'])->name('admin.informasi.index');
@@ -95,21 +95,17 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/praktik', [JadwalPraktikController::class, 'index'])->name('jadwal.index');
     Route::delete('/praktik/{id}', [JadwalPraktikController::class, 'destroy'])->name('jadwal.destroy');
     Route::put('/praktik/{id}', [JadwalPraktikController::class, 'update'])->name('jadwal.update'); // ✅ Route Update
-});
+
 
 // Authentication Routes
-Route::get('/Login', [AdminController::class, 'showLogin'])->name('adminLogin');
-Route::post('/Login', [AdminController::class, 'adminLogin']);
+Route::get('/adminLogin', [AdminController::class, 'showLogin'])->name('adminLogin');
+Route::post('/adminLogin', [AdminController::class, 'adminLogin']);
 
-Route::get('/registrasiAdmin', [AdminController::class, 'showRegistrasi'])->name('registrasiAdmin');
-Route::post('/registrasiAdmin', [AdminController::class, 'registrasiAdmin']);
+Route::get('/registerAdmin', [AdminController::class, 'showRegister'])->name('registerAdmin');
+Route::post('/registerAdmin', [AdminController::class, 'registerAdmin']);
 
 // Dashboard Redirect
 //origin/admin
-Route::get('/login', function () {
-    return redirect()->route('adminArtikel');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 // Profile Routes
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -117,4 +113,3 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';

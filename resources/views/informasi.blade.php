@@ -98,7 +98,6 @@
                                     <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
                                 </div>
                             </div>
-                            
                         </div>
                     </div>
                 </section>
