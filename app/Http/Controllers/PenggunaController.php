@@ -30,7 +30,7 @@ class PenggunaController extends Controller
             'nomor_hp.unique' => 'Nomor handphone ini sudah digunakan.',
             'kata_sandi.required' => 'Kata sandi harus diisi.',
             'kata_sandi.min' => 'Kata sandi minimal 6 karakter.',
-        ]);        
+        ]);
 
         // Simpan pengguna baru
         Pengguna::create([
@@ -38,9 +38,40 @@ class PenggunaController extends Controller
             'email' => $request->email,
             'nomor_hp' => $request->nomor_hp,
             'kata_sandi' => Hash::make($request->kata_sandi),
+            'usia' => 'Perlu diisi!',
+            'tinggi_badan' => 'Perlu diisi!',
+            'berat_badan' => 'Perlu diisi!',
+            'jenis_kelamin' => 'Perlu diisi!',
+            'penyakit_genetik' => 'Perlu diisi!',
+            'alamat' => 'Perlu diisi!',
         ]);
 
         // Beri notifikasi sukses dengan SweetAlert
         return redirect()->route('daftar')->with('success', 'Akun berhasil dibuat! Anda akan dialihkan ke halaman masuk...');
+    }
+    public function edit($id)
+    {
+        $pengguna = Pengguna::findOrFail($id);
+        return view('edit-profil', compact('pengguna'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama_lengkap' => 'required|string|max:255',
+            'email' => 'required|email',
+            'nomor_hp' => 'required|string|max:15',
+            'usia' => 'required',
+            'tinggi_badan' => 'required',
+            'berat_badan' => 'required',
+            'jenis_kelamin' => 'required',
+            'penyakit_genetik' => 'required',
+            'alamat' => 'required',
+        ]);
+
+        $pengguna = Pengguna::findOrFail($id);
+        $pengguna->update($request->all());
+
+        return redirect()->route('profil', $pengguna->id)->with('success', 'Profil berhasil diperbarui!');
     }
 }

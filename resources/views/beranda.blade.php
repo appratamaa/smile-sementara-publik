@@ -99,25 +99,27 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="hover:bg-gray-100">
-                                        <td class="border border-gray-300 px-4 py-2 text-center">1</td>
-                                        <td class="border border-gray-300 px-4 py-2 text-center">2024-03-01</td>
-                                        <td class="border border-gray-300 px-4 py-2 text-center">Pemeriksaan Umum</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-100">
-                                        <td class="border border-gray-300 px-4 py-2 text-center">2</td>
-                                        <td class="border border-gray-300 px-4 py-2 text-center">2024-03-10</td>
-                                        <td class="border border-gray-300 px-4 py-2 text-center">Kontrol Gigi</td>
-                                    </tr>
-                                    <tr class="hover:bg-gray-100">
-                                        <td class="border border-gray-300 px-4 py-2 text-center">3</td>
-                                        <td class="border border-gray-300 px-4 py-2 text-center">2024-03-15</td>
-                                        <td class="border border-gray-300 px-4 py-2 text-center">Cek Laboratorium</td>
-                                    </tr>
+                                    @forelse($riwayatKunjungan as $index => $kunjungan)
+                                        <tr class="hover:bg-gray-100">
+                                            <td class="border border-gray-300 px-4 py-2 text-center">{{ $index + 1 }}
+                                            </td>
+                                            <td class="border border-gray-300 px-4 py-2 text-center">
+                                                {{ $kunjungan->tanggal->format('d F Y') }}
+
+                                            <td class="border border-gray-300 px-4 py-2 text-center">
+                                                {{ $kunjungan->tujuan }}</td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="3" class="text-center py-4 text-gray-500">Belum ada riwayat
+                                                kunjungan.</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
 
                     <!-- Riwayat Penyakit -->
                     <div class="mt-8 bg-white p-6 rounded-lg shadow-md">

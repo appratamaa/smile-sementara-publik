@@ -16,7 +16,13 @@ class Pengguna extends Model
         'email',
         'nomor_hp',
         'kata_sandi',
-    ];
+        'usia',
+        'tinggi_badan',
+        'berat_badan',
+        'jenis_kelamin',
+        'penyakit_genetik',
+        'alamat',
+    ];    
 
     protected $hidden = [
         'kata_sandi',

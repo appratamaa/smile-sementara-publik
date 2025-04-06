@@ -1,17 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminAntrian;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MasukController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
-use Illuminate\Support\Facades\View;
-use App\Http\Controllers\InformasiController;
 use App\Http\Controllers\JadwalPraktikController;
 
 // User Routes
@@ -35,9 +36,22 @@ Route::post('/keluar', function () {
 })->name('keluar');
 
 Route::get('/beranda', function () {
+    $pengguna = session('pengguna');
+    $riwayatKunjungan = \App\Models\Appointment::where('nomor_hp', $pengguna->nomor_hp)->get();
+
+    return view('beranda', compact('pengguna', 'riwayatKunjungan'));
+})->name('beranda');
+
+
+Route::get('/buatjanji', function () {
     $pengguna = session('pengguna'); // Ambil data pengguna dari sesi
     return view('beranda', compact('pengguna'));
-})->name('beranda');
+})->name('buatjanji');
+
+Route::get('/chatklinik', function () {
+    $pengguna = session('pengguna'); // Ambil data pengguna dari sesi
+    return view('beranda', compact('pengguna'));
+})->name('chatklinik');
 
 Route::get('/daftar', [PenggunaController::class, 'showForm'])->name('daftar');
 Route::post('/daftar', [PenggunaController::class, 'daftar']);
@@ -71,6 +85,7 @@ Route::get('/artikel/cari', [ArtikelUserController::class, 'search'])->name('art
 Route::get('/artikel/{id}', [ArtikelUserController::class, 'show'])->name('artikel.show');
 Route::get('/welcome', [ArtikelUserController::class, 'welcome'])->name('welcome');
 
+//Akses Profil
 Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
 Route::get('/profil', function () {
@@ -78,6 +93,10 @@ Route::get('/profil', function () {
     return view('profil', compact('pengguna'));
 })->name('profil');
 
+
+//Akses Edit Profil
+Route::get('/profil/{id}/edit', [PenggunaController::class, 'edit'])->name('profil.edit');
+Route::post('/profil/{id}/update', [PenggunaController::class, 'update'])->name('profil.update');
 
 
 
@@ -114,3 +133,16 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/adminAntrian/data', [AdminAntrian::class, 'getAllAppointments']);
+Route::get('/api/antrian/terkini', [AdminAntrian::class, 'getCurrentAndNext']);
+
+
+
+
+//Layar Antrian
+Route::get('/layarAntrian', function () {
+    return view('layarAntrian');
+});
+
+
