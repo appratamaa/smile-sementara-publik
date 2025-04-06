@@ -89,48 +89,50 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label class="text-gray-600 font-semibold">Nama</label>
-                                    <p class="text-gray-800">John Doe</p>
+                                    <p class="text-gray-800">{{ $pengguna->nama_lengkap ?? '-' }}</p>
                                 </div>
                                 <div>
                                     <label class="text-gray-600 font-semibold">Email</label>
-                                    <p class="text-gray-800">john.doe@example.com</p>
+                                    <p class="text-gray-800">{{ $pengguna->email ?? '-' }}</p>
                                 </div>
                                 <div>
                                     <label class="text-gray-600 font-semibold">Nomor Handphone</label>
-                                    <p class="text-gray-800">08123456789</p>
+                                    <p class="text-gray-800">{{ $pengguna->nomor_hp ?? '-' }} </p>
                                 </div>
                                 <div>
                                     <label class="text-gray-600 font-semibold">Jenis Kelamin</label>
-                                    <p class="text-gray-800">Laki-laki</p>
+                                    <p class="text-gray-800">{{ $pengguna->jenis_kelamin ?? '-' }}</p>
                                 </div>
                                 <div>
                                     <label class="text-gray-600 font-semibold">Usia</label>
-                                    <p class="text-gray-800">25 Tahun</p>
+                                    <p class="text-gray-800">{{ $pengguna->usia ? $pengguna->usia . ' Tahun' : '-' }}
+                                    </p>
                                 </div>
                                 <div>
                                     <label class="text-gray-600 font-semibold">Berat Badan</label>
-                                    <p class="text-gray-800">70 kg</p>
+                                    <p class="text-gray-800">
+                                        {{ $pengguna->berat_badan ? $pengguna->berat_badan . ' kg' : '-' }}</p>
                                 </div>
                                 <div>
                                     <label class="text-gray-600 font-semibold">Tinggi Badan</label>
-                                    <p class="text-gray-800">175 cm</p>
+                                    <p class="text-gray-800">
+                                        {{ $pengguna->tinggi_badan ? $pengguna->tinggi_badan . ' cm' : '-' }}</p>
                                 </div>
                                 <div>
                                     <label class="text-gray-600 font-semibold">Penyakit Genetik</label>
-                                    <p class="text-gray-800">Tidak Ada</p>
+                                    <p class="text-gray-800">{{ $pengguna->penyakit_genetik ?? 'Tidak Ada' }}</p>
                                 </div>
                                 <div class="md:col-span-2">
                                     <label class="text-gray-600 font-semibold">Alamat</label>
-                                    <p class="text-gray-800">Jl. Contoh No. 123, Jakarta</p>
+                                    <p class="text-gray-800">{{ $pengguna->alamat ?? '-' }}</p>
                                 </div>
                             </div>
 
                             <!-- Tombol Edit -->
                             <div class="mt-4 text-right">
-                                <button
-                                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                                <a href="{{ route('profil.edit', $pengguna->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
                                     Edit Profil
-                                </button>
+                                </a>                                
                             </div>
                         </div>
                     </div>
