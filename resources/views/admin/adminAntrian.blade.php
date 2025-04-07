@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Antrian Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body class="bg-gray-100 h-screen flex">
 
     <!-- Sidebar -->
@@ -14,15 +16,21 @@
             <img src="{{ asset('image/SMILE-LOGO.svg') }}" alt="Smile logo" class="h-10">
         </h1>
         <ul class="space-y-2 flex-grow">
-            <li><a href="/adminArtikel" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Artikel</a></li>
-            <li><a href="/adminAntrian" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Antrian</a></li>
-            <li><a href="/adminInformasi" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Informasi</a></li>
-            <li><a href="/adminPraktik" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Praktik</a></li>
-            <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Chat</a></li>
+            <li><a href="/adminArtikel"
+                    class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Artikel</a></li>
+            <li><a href="/adminAntrian"
+                    class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Antrian</a></li>
+            <li><a href="/adminInformasi"
+                    class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Informasi</a></li>
+            <li><a href="/adminPraktik"
+                    class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Praktik</a></li>
+            <li><a href="#" class="block px-4 py-2 text-gray-700 hover:bg-black hover:text-white rounded">Chat</a>
+            </li>
         </ul>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="block w-full text-left px-4 py-2 text-red-600 font-bold hover:bg-red-100 rounded">Keluar</button>
+            <button type="submit"
+                class="block w-full text-left px-4 py-2 text-red-600 font-bold hover:bg-red-100 rounded">Keluar</button>
         </form>
     </div>
 
@@ -45,8 +53,10 @@
         <div class="mb-6 flex items-center space-x-4">
             <label for="jumlahAntrian" class="text-lg font-medium text-gray-700">Jumlah Antrian per Hari</label>
             <div class="flex">
-                <input type="number" id="jumlahAntrian" name="jumlahAntrian" class="w-32 px-4 py-2 border border-gray-300 rounded-l-md" placeholder="Jumlah" />
-                <button id="submitAntrian" class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600">Submit</button>
+                <input type="number" id="jumlahAntrian" name="jumlahAntrian"
+                    class="w-32 px-4 py-2 border border-gray-300 rounded-l-md" placeholder="Jumlah" />
+                <button id="submitAntrian"
+                    class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600">Submit</button>
             </div>
         </div>
 
@@ -63,8 +73,72 @@
                 </tr>
             </thead>
             <tbody id="antrianTable">
-                <!-- Data antrian akan muncul di sini -->
+                <!-- Data akan dimuat dari AJAX -->
             </tbody>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    fetch('/adminAntrian/data')
+                        .then(response => response.json())
+                        .then(data => {
+                            const tableBody = document.getElementById('antrianTable');
+                            tableBody.innerHTML = ''; // Kosongkan dulu
+
+                            data.forEach((item, index) => {
+                                const row = `
+                                    <tr class="border-b border-gray-300">
+                                        <td class="py-2 px-4">${item.id}</td>
+                                        <td class="py-2 px-4">${item.nama}</td>
+                                        <td class="py-2 px-4">${item.tujuan}</td>
+                                        <td class="py-2 px-4">A-${item.id}</td>
+                                        <td class="py-2 px-4">
+                                            <button 
+                                                class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded panggil-btn"
+                                                data-id="${item.id}"
+                                                data-nama="${item.nama}">
+                                                Panggil
+                                            </button>
+                                        </td>
+                                    </tr>
+                                `;
+                                tableBody.insertAdjacentHTML('beforeend', row);
+                            });
+
+                            // Tambahkan event listener ke semua tombol panggil
+                            document.querySelectorAll('.panggil-btn').forEach(button => {
+                                button.addEventListener('click', function() {
+                                    const id = this.dataset.id;
+                                    const nama = this.dataset.nama;
+                                    alert(`Memanggil pasien: ${nama} (A-${id})`);
+
+                                    // TODO: Tambahkan request ke backend jika ingin update status
+                                    // Contoh: fetch(`/api/panggil/${id}`, { method: 'POST' })
+                                    fetch(`/api/antrian/panggil/${id}`, {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}' // kalau lewat blade
+                                            },
+                                        })
+                                        .then(res => res.json())
+                                        .then(response => {
+                                            alert(`Memanggil pasien: ${nama} (A-${id})`);
+                                            // Optional: reload atau refresh data
+                                        })
+                                        .catch(error => {
+                                            console.error('Gagal memanggil antrian:', error);
+                                        });
+
+                                });
+                            });
+                        })
+                        .catch(error => {
+                            console.error('Gagal mengambil data:', error);
+                        });
+                });
+            </script>
+
+
         </table>
     </div>
 
@@ -110,4 +184,5 @@
         });
     </script>
 </body>
+
 </html>
