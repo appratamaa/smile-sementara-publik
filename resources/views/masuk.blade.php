@@ -48,9 +48,9 @@
                       <input type="password" name="password" id="password" required
                           class="block w-full rounded-md px-3 py-1.5">
                       <div class="text-right mt-1">
-                          <a href="{{ route('password.request') }}" class="text-sm text-black ">
-                              Lupa Kata Sandi?
-                          </a>
+                        <a href="{{ route('password.request') }}" class="text-sm text-black">
+                            Lupa Kata Sandi?
+                        </a>                        
                       </div>
                   </div>                  
 

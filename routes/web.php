@@ -12,6 +12,7 @@ use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\InformasiController;
+use App\Http\Controllers\ChatKlinikController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
 use App\Http\Controllers\JadwalPraktikController;
@@ -116,6 +117,11 @@ Route::get('/ulasan/{id}', function ($id) {
     }
 });
 
+Route::get('/chatklinik', [ChatKlinikController::class, 'index']);
+Route::post('/chatklinik/send', [ChatKlinikController::class, 'send']);
+
+Route::get('/chatklinik', [ChatKlinikController::class, 'index']);
+Route::post('/chatklinik', [ChatKlinikController::class, 'send'])->name('chatklinik.kirim');
 
 
 
@@ -166,3 +172,8 @@ Route::get('/layarAntrian', function () {
 });
 
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/chat', [ChatKlinikController::class, 'adminIndex'])->name('admin.chat.list');
+    Route::get('/admin/chat/{id}', [ChatKlinikController::class, 'adminChatDetail'])->name('admin.chat.detail');
+    Route::post('/admin/chat/{id}', [ChatKlinikController::class, 'adminSendMessage'])->name('admin.chat.send');
+});
