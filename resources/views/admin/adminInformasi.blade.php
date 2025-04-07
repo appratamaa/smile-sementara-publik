@@ -9,10 +9,7 @@
 <body class="bg-gray-100 h-screen flex">
 
     <!-- Sidebar -->
-    <div class="w-64 bg-white shadow-md p-4 flex flex-col h-full">
-        <h1 class="text-left mb-4">
-            <img src="image/SMILE-LOGO.svg" alt="Smile logo" class="h-10">
-        </h1>
+    <div>
         <x-sidebar-admin>
         </x-sidebar-admin>
         <form method="POST" action="{{ route('logout') }}">
@@ -26,12 +23,12 @@
         <!-- Navbar -->
         <div class="flex justify-between items-center bg-white p-4 shadow-md rounded-lg">
             <h2 class="text-2xl font-semibold">Informasi Admin</h2>
-            <div class="flex items-center space-x-4">
+            {{-- <div class="flex items-center space-x-4">
                 <span class="text-gray-700 text-sm">{{ Auth::user()->email }}</span>
                 <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
                     <span class="text-white font-semibold">{{ substr(Auth::user()->name, 0, 1) }}</span>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Form Input -->

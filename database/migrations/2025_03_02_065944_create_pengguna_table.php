@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('berat_badan')->default('Perlu diisi!');
             $table->string('jenis_kelamin')->default('Perlu diisi!');
             $table->string('penyakit_genetik')->default('Perlu diisi!');
-            $table->text('alamat')->default('Perlu diisi!');
+            $table->string('alamat')->default('Perlu diisi!');
             $table->timestamps();
         });        
     }

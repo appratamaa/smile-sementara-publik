@@ -21,6 +21,7 @@ class InformasiController extends Controller
     
         return view('admin.adminInformasi', compact('informasi'));
     }
+    
 
     public function store(Request $request)
     {
@@ -38,7 +39,7 @@ class InformasiController extends Controller
             $informasi->deskripsi = $request->input('deskripsi');
 
             if ($request->hasFile('gambar')) {
-                $request->file('gambar')->move('gambar_informasi/', $request->file('gambar')->getClientOriginalName());
+                $request->file('gambar')->move('gambar/', $request->file('gambar')->getClientOriginalName());
                 $informasi->gambar = $request->file('gambar')->getClientOriginalName();
             }
 
