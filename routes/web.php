@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminAntrian;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\MasukController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\UlasanController;
 use App\Http\Controllers\ArtikelController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PenggunaController;
@@ -97,6 +98,25 @@ Route::get('/profil', function () {
 //Akses Edit Profil
 Route::get('/profil/{id}/edit', [PenggunaController::class, 'edit'])->name('profil.edit');
 Route::post('/profil/{id}/update', [PenggunaController::class, 'update'])->name('profil.update');
+
+Route::get('/antrean/{id}', [AppointmentController::class, 'show'])->name('antrean.show');
+
+Route::post('/ulasan', [UlasanController::class, 'store'])->name('ulasan.store');
+Route::get('/ulasan/{id}', function ($id) {
+    $ulasan = App\Models\Ulasan::where('appointment_id', $id)->first();
+
+    if ($ulasan) {
+        return response()->json([
+            'found' => true,
+            'rating' => $ulasan->rating,
+            'komentar' => $ulasan->komentar
+        ]);
+    } else {
+        return response()->json(['found' => false]);
+    }
+});
+
+
 
 
 

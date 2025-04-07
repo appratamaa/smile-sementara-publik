@@ -9,21 +9,42 @@ use Illuminate\Support\Facades\Auth;
 
 class AppointmentController extends Controller
 {
-    // Tampilkan beranda dengan riwayat kunjungan berdasarkan nomor_hp
+    // Tampilkan beranda dengan riwayat kunjungan dan informasi antrian
     public function index()
     {
-        $pengguna = Auth::user(); // pastikan ini di dalam method
+        $pengguna = Auth::user();
 
-        // Ambil data appointment berdasarkan nomor_hp pengguna
+        // 1. Riwayat kunjungan pengguna
         $riwayatKunjungan = Appointment::where('nomor_hp', $pengguna->nomor_hp)->get();
 
-        return view('beranda', compact('pengguna', 'riwayatKunjungan'));
+        // 2. Total seluruh pasien
+        $totalPasien = Appointment::count();
+
+        // 3. Ambil antrian terakhir pengguna
+        $antrianTerakhir = Appointment::where('nomor_hp', $pengguna->nomor_hp)
+            ->latest('id')
+            ->first();
+
+        $antrianId = $antrianTerakhir ? $antrianTerakhir->id : null;
+
+        // 4. Hitung sisa antrian
+        $sisaAntrian = $antrianId
+            ? Appointment::where('id', '<', $antrianId)->count()
+            : 0;
+
+        return view('beranda', compact(
+            'pengguna',
+            'riwayatKunjungan',
+            'totalPasien',
+            'antrianId',
+            'sisaAntrian'
+        ));
     }
 
     // Tampilkan form janji temu dengan nomor HP pengguna
     public function create()
     {
-        $user = Auth::user(); // pastikan Auth::user() digunakan dalam method
+        $user = Auth::user();
         $pengguna = Pengguna::where('email', $user->email)->first();
 
         return view('form-janji-temu', ['nomor_hp' => $pengguna->nomor_hp]);
