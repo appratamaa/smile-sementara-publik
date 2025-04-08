@@ -17,6 +17,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
 use App\Http\Controllers\JadwalPraktikController;
 use App\Models\Appointment;
+use App\Http\Controllers\SimpanInformasiController;
 
 // User Routes
 Route::get('/', function () {
@@ -176,6 +177,8 @@ Route::post('/chatklinik', [ChatKlinikController::class, 'send'])->name('chatkli
     Route::post('/adminInformasi/store', [InformasiController::class, 'store'])->name('informasi.store');
     Route::view('/admin/Antrian', 'admin.adminPraktik');
     Route::view('/adminInformasi', 'admin.adminInformasi');
+    Route::get('/informasi', [SimpanInformasiController::class, 'index']);
+
     Route::view('/adminAntrian', 'admin.adminAntrian');
     Route::view('/tes', 'admin.tesData');
     Route::post('/praktik', [JadwalPraktikController::class, 'store'])->name('jadwal.store');

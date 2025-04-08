@@ -18,89 +18,31 @@
 
         <main class="bg-white min-h-screen">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <!-- Section Layanan -->
+                <!-- Section Informasi -->
                 <section class="bg-white py-10" data-aos="fade-up">
                     <div class="container mx-auto px-4">
                         <h2 class="text-3xl font-bold text-center text-gray-800 mb-8" data-aos="fade-up">
-                            Layanan Unggulan Kami
+                            Informasi Terbaru
                         </h2>
                         <div class="flex md:grid md:grid-cols-3 gap-8 overflow-x-auto sm:flex-nowrap sm:space-x-4 pb-4">
-                            <!-- Card 1 -->
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
+                            @foreach ($informasi as $item)
+                                <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0"
+                                    data-aos="fade-right"
+                                    onclick="window.location.href='{{ url('/informasi/' . $item->id) }}'">
+                                    <img src="{{ asset('gambar/' . $item->gambar) }}" alt="{{ $item->judul }}"
+                                        class="w-full h-48 object-cover rounded-t-lg">
+                                    <div class="p-4">
+                                        <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">{{ $item->judul }}</h3>
+                                        <p class="text-gray-600 mt-2">{{ Str::limit($item->deskripsi, 120) }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
-                                </div>
-                            </div>
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
-                                </div>
-                            </div>
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
-                                </div>
-                            </div>
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
-                                </div>
-                            </div>
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
-                                </div>
-                            </div>
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
-                                </div>
-                            </div>
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
-                                </div>
-                            </div>
-                            <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg overflow-hidden p-4 mt-2 cursor-pointer min-w-[80%] sm:min-w-[60%] md:min-w-0" 
-                                data-aos="fade-right" onclick="handleCardClick('Pembersihan Gigi')">
-                                <img src="image/GIGI1.png" alt="Pembersihan Gigi" class="w-full h-48 object-cover rounded-t-lg">
-                                <div class="p-4">
-                                    <h3 class="text-xl font-semibold text-gray-800 group-hover:text-blue-500">Pembersihan Gigi</h3>
-                                    <p class="text-gray-600 mt-2">Layanan untuk membersihkan plak dan karang gigi demi senyum sehat Anda.</p>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </section>
+            </div>
+        </main>
+        
                 
 
                 <!-- Section Jadwal Praktik -->

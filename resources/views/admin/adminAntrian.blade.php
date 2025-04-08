@@ -40,13 +40,13 @@
         <div class="flex justify-between items-center bg-white p-4 shadow-md rounded-lg mb-4">
             <h2 class="text-2xl font-semibold">Antrian Admin</h2>
 
-            <!-- Profile Section -->
+            {{-- <!-- Profile Section -->
             <div class="flex items-center space-x-4">
                 <span class="text-gray-700 text-sm">{{ Auth::user()->email }}</span>
                 <div class="w-10 h-10 bg-gray-300 rounded-full flex items-center justify-center">
                     <span class="text-white font-semibold">{{ substr(Auth::user()->name, 0, 1) }}</span>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Input untuk jumlah antrian per hari dengan tombol submit di pinggirnya -->
