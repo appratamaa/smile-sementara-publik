@@ -4,22 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Models\ArtikelUser;
 use Illuminate\Http\Request;
+use App\Models\Ulasan;
+use App\Models\Appointment;
 
 class ArtikelUserController extends Controller
 {
     public function index()
-{
-    $artikels = ArtikelUser::latest()->get();
-    return view('artikel', compact('artikels')); // Pastikan tetap merender tampilan
-}
+    {
+        $artikels = ArtikelUser::latest()->get();
+        return view('artikel', compact('artikels')); // Pastikan tetap merender tampilan
+    }
 
 
     public function welcome()
     {
-        // Ambil 6 artikel terbaru untuk ditampilkan di halaman welcome
-        $artikels = ArtikelUser::latest()->take(6)->get(); 
+        $artikels = ArtikelUser::latest()->take(6)->get();
 
-        return view('welcome', compact('artikels'));
+        // Ambil hanya ulasan dengan rating lebih dari 4
+        $ulasans = Ulasan::with('appointment')
+            ->where('rating', '>=', 4)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        return view('welcome', compact('artikels', 'ulasans'));
     }
 
     public function show($id)
@@ -36,7 +44,7 @@ class ArtikelUserController extends Controller
 
     public function search(Request $request)
     {
-        $keyword = trim($request->input('keyword')); 
+        $keyword = trim($request->input('keyword'));
 
         if (empty($keyword)) {
             return redirect()->route('artikel.index')->with('error', 'Masukkan kata kunci untuk mencari artikel.');

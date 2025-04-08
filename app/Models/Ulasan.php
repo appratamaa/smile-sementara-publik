@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Appointment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ulasan extends Model
 {
@@ -19,6 +20,8 @@ class Ulasan extends Model
 
     public function appointment()
     {
+        return $this->belongsTo(Appointment::class);
+        // app/Models/Ulasan.php
         return $this->belongsTo(Appointment::class);
     }
 }
