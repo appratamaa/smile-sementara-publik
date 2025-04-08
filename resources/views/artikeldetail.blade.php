@@ -13,8 +13,8 @@
 </head>
 
 <body class="bg-gray-100">
+    @include('components.navbar'),
     <main>
-        <x-navbar></x-navbar> <!-- Navbar di bagian atas -->
 
         <!-- Container Utama -->
         <div class="container mx-auto p-6 max-w-4xl bg-white shadow-lg rounded-lg mt-6">

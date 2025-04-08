@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pengguna;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class PenggunaController extends Controller
 {
@@ -15,11 +16,10 @@ class PenggunaController extends Controller
 
     public function daftar(Request $request)
     {
-        // Validasi input
         $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'email' => 'required|email|unique:pengguna,email',
-            'nomor_hp' => 'required|string|unique:pengguna,nomor_hp|max:15',
+            'nomor_hp' => 'required|numeric|digits_between:10,15',
             'kata_sandi' => 'required|string|min:6',
         ], [
             'nama_lengkap.required' => 'Nama lengkap harus diisi.',
@@ -32,23 +32,22 @@ class PenggunaController extends Controller
             'kata_sandi.min' => 'Kata sandi minimal 6 karakter.',
         ]);
 
-        // Simpan pengguna baru
         Pengguna::create([
             'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
             'nomor_hp' => $request->nomor_hp,
             'kata_sandi' => Hash::make($request->kata_sandi),
-            'usia' => 'Perlu diisi!',
-            'tinggi_badan' => 'Perlu diisi!',
-            'berat_badan' => 'Perlu diisi!',
-            'jenis_kelamin' => 'Perlu diisi!',
-            'penyakit_genetik' => 'Perlu diisi!',
-            'alamat' => 'Perlu diisi!',
+            'usia' => '-',
+            'tinggi_badan' => '-',
+            'berat_badan' => '-',
+            'jenis_kelamin' => '-',
+            'penyakit_genetik' => '-',
+            'alamat' => '-',
         ]);
 
-        // Beri notifikasi sukses dengan SweetAlert
         return redirect()->route('daftar')->with('success', 'Akun berhasil dibuat! Anda akan dialihkan ke halaman masuk...');
     }
+
     public function edit($id)
     {
         $pengguna = Pengguna::findOrFail($id);
@@ -72,6 +71,21 @@ class PenggunaController extends Controller
         $pengguna = Pengguna::findOrFail($id);
         $pengguna->update($request->all());
 
-        return redirect()->route('profil', $pengguna->id)->with('success', 'Profil berhasil diperbarui!');
+        if (Auth::check() && Auth::id() == $pengguna->id) {
+            $freshUser = \App\Models\User::find(Auth::id());
+            Auth::setUser($freshUser);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Profil berhasil diperbarui!',
+            'redirect_url' => route('profil', $pengguna->id),
+        ]);
+    }
+
+    public function showProfil($id)
+    {
+        $pengguna = Pengguna::findOrFail($id);
+        return view('profil', compact('pengguna'));
     }
 }

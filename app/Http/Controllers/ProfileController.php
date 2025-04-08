@@ -8,14 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
-    /**
-     * Update pengguna's profile.
-     */
     public function update(Request $request)
     {
-        $pengguna = Auth::pengguna(); // Perbaikan dari Auth::pengguna() ke Auth::user()
+        $pengguna = Auth::pengguna(); // Gunakan guard jika perlu: Auth::guard('pengguna')->user();
 
-        // Validasi Input dengan pesan error yang lebih jelas
+        // Validasi input
         $request->validate([
             'berat_badan' => 'nullable|numeric|min:1',
             'tinggi_badan' => 'nullable|numeric|min:1',
@@ -25,38 +22,39 @@ class ProfileController extends Controller
         ], [
             'berat_badan.numeric' => 'Berat badan harus berupa angka.',
             'tinggi_badan.numeric' => 'Tinggi badan harus berupa angka.',
-            'foto_profil.image' => 'Foto profil harus berupa gambar dengan format jpeg, png, jpg, atau gif.',
-            'foto_profil.max' => 'Ukuran foto profil tidak boleh lebih dari 2MB.',
+            'foto_profil.image' => 'Foto profil harus berupa gambar.',
+            'foto_profil.max' => 'Ukuran foto maksimal 2MB.',
         ]);
 
-        // Perbarui hanya jika ada perubahan
-        $dataToUpdate = [
+        // Simpan data profil (kecuali foto)
+        $dataToUpdate = array_filter([
             'berat_badan' => $request->berat_badan,
             'tinggi_badan' => $request->tinggi_badan,
             'penyakit_genetik' => $request->penyakit_genetik,
             'alamat' => $request->alamat,
-        ];
+        ], fn($val) => !is_null($val));
 
-        // Hapus data yang null agar tidak menimpa nilai yang ada
-        $filteredData = array_filter($dataToUpdate, fn($value) => !is_null($value));
-
-        if (!empty($filteredData)) {
-            $pengguna->update($filteredData);
+        if (!empty($dataToUpdate)) {
+            $pengguna->update($dataToUpdate);
         }
 
-        // Upload Foto Profil
+        // Simpan foto profil (jika ada)
         if ($request->hasFile('foto_profil')) {
             // Hapus foto lama jika ada
-            if ($pengguna->foto_profil) {
+            if ($pengguna->foto_profil && Storage::disk('public')->exists(str_replace('/storage/', '', $pengguna->foto_profil))) {
                 Storage::disk('public')->delete(str_replace('/storage/', '', $pengguna->foto_profil));
             }
 
-            // Simpan foto baru
+            // Upload foto baru
             $path = $request->file('foto_profil')->store('profile_pictures', 'public');
             $pengguna->update(['foto_profil' => "/storage/" . $path]);
         }
 
         return redirect()->route('profile.edit')->with('status', 'Profil berhasil diperbarui');
     }
+    public function edit()
+{
+    return view('edit-profil');
 }
 
+}

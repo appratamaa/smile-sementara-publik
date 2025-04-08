@@ -22,6 +22,7 @@ class Pengguna extends Model
         'jenis_kelamin',
         'penyakit_genetik',
         'alamat',
+        'foto_profil',
     ];    
 
     protected $hidden = [

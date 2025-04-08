@@ -161,18 +161,21 @@
                     <div class="bg-white py-10">
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 px-4 md:px-12">
                             @foreach ($artikels as $artikel)
-                                <div class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg p-4 mt-2"
-                                    data-aos="zoom-in">
+                            <a href="{{ route('artikel.show', $artikel->id_artikel) }}"
+                                   class="group relative transform transition-all duration-500 ease-in-out hover:scale-110 hover:shadow-xl shadow-lg bg-white rounded-lg p-4 mt-2"
+                                   data-aos="zoom-in">
                                     <h2 class="text-lg font-semibold">{{ $artikel->judul_artikel }}</h2>
                                     <p class="text-sm text-gray-500">
-                                        {{ Str::limit($artikel->deskripsi_artikel, 60, '...') }}</p>
+                                        {{ Str::limit($artikel->deskripsi_artikel, 60, '...') }}
+                                    </p>
                                     <p class="text-xs text-gray-400">
-                                        {{ \Carbon\Carbon::parse($artikel->created_at)->format('d F Y') }}</p>
-                                    <img src="{{ asset('gambar_artikel/' . $artikel['gambar']) }}"
-                                        alt="{{ $artikel->judul_artikel }}" class="rounded-md mt-2">
-                                </div>
+                                        {{ \Carbon\Carbon::parse($artikel->created_at)->format('d F Y') }}
+                                    </p>
+                                    <img src="{{ asset('gambar_artikel/' . $artikel->gambar) }}"
+                                         alt="{{ $artikel->judul_artikel }}" class="rounded-md mt-2">
+                                </a>
                             @endforeach
-                        </div>
+                        </div>                        
 
                         <!-- Tombol untuk melihat lebih banyak artikel -->
                         <div class="text-center mt-6">
@@ -233,36 +236,31 @@
             <!-- Bagian Testimoni -->
             <div class="bg-white py-12 mt-10">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <h2 class="text-3xl font-bold text-center text-gray-800" data-aos="fade-up">Apa Kata Pasien
-                        Kami?</h2>
+                    <h2 class="text-3xl font-bold text-center text-gray-800" data-aos="fade-up">Apa Kata Pasien Kami?
+                    </h2>
                     <hr class="w-96 mx-auto mt-2 border-gray-400 dashed-line">
 
                     <style>
                         .dashed-line {
-                            border-top-style: dashed;
-                            border-top-width: 2px;
-                            border-color: #BDBDBD;
                             border-top: 2px dashed rgba(0, 0, 0, 0.3);
-                            border-spacing: 10px;
                         }
                     </style>
 
                     <div class="mt-8 space-y-6">
-                        <div class="testimonial" data-aos="fade-up" data-aos-delay="200">
-                            <p class="text-gray-600 italic">"Pelayanan sangat baik, dokter ramah, dan tempatnya
-                                nyaman!"</p>
-                            <p class="mt-4 font-semibold text-gray-800">- Rina, 30 tahun</p>
-                        </div>
-                        <div class="testimonial" data-aos="fade-up" data-aos-delay="400">
-                            <p class="text-gray-600 italic">"Proses scaling gigi sangat cepat dan tidak sakit sama
-                                sekali."</p>
-                            <p class="mt-4 font-semibold text-gray-800">- Andi, 27 tahun</p>
-                        </div>
-                        <div class="testimonial" data-aos="fade-up" data-aos-delay="600">
-                            <p class="text-gray-600 italic">"Harga sangat terjangkau dengan kualitas pelayanan yang
-                                terbaik!"</p>
-                            <p class="mt-4 font-semibold text-gray-800">- Siti, 35 tahun</p>
-                        </div>
+                        @foreach ($ulasans as $ulasan)
+                            <div class="testimonial" data-aos="fade-up" data-aos-delay="{{ $loop->index * 200 }}">
+                                <div class="flex items-center mt-2">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <i class="fa-star {{ $i <= $ulasan->rating ? 'fas text-yellow-400' : 'far text-gray-300' }}"></i>
+                                    @endfor
+                                </div>
+                                <p class="text-gray-600 italic">"{{ $ulasan->komentar }}"</p>
+                                <p class="mt-4 font-semibold text-gray-800">
+                                    - {{ $ulasan->appointment->nama ?? 'Pasien' }},
+                                    {{ $ulasan->appointment->usia ?? '-' }} tahun
+                                </p>
+                            </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -297,7 +295,7 @@
                     <h2 class="text-4xl font-extrabold text-center text-gray-900 mb-8">Buat Janji Temu</h2>
                     <form id="appointmentForm" action="{{ route('appointments.store') }}" method="POST">
                         @csrf
-        
+
                         <!-- Nama -->
                         <div class="mb-3">
                             <label for="nama" class="block text-gray-700 text-sm">Nama Lengkap</label>
@@ -305,7 +303,7 @@
                                 class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 placeholder="Masukkan nama Anda" required>
                         </div>
-        
+
                         <!-- Usia & Jenis Kelamin -->
                         <div class="flex gap-2">
                             <div class="w-1/2">
@@ -325,7 +323,7 @@
                                 </select>
                             </div>
                         </div>
-        
+
                         <!-- Alamat -->
                         <div class="mb-3">
                             <label for="alamat" class="block text-gray-700 text-sm">Alamat Singkat</label>
@@ -333,7 +331,7 @@
                                 class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 placeholder="Alamat Anda" required>
                         </div>
-        
+
                         <!-- Tanggal & Tujuan -->
                         <div class="mb-3">
                             <label for="tanggal" class="block text-gray-700 text-sm">Tanggal</label>
@@ -341,7 +339,7 @@
                                 class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
                                 required>
                         </div>
-        
+
                         <div class="mb-4">
                             <label for="tujuan" class="block text-gray-700 text-sm">Tujuan</label>
                             <select name="tujuan" id="tujuan"
@@ -356,7 +354,7 @@
                                 <option>Perawatan Saluran Akar</option>
                             </select>
                         </div>
-        
+
                         <!-- Tombol Submit -->
                         <button type="submit"
                             class="w-full bg-blue-500 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-700 transition duration-300">

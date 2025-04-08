@@ -3,7 +3,7 @@
         <!-- Logo & Deskripsi -->
         <div class="lg:col-span-1 flex flex-col items-center lg:items-start">
             <a href="/" aria-label="Beranda">
-                <img src="image/SMILE-LOGO-3.svg" alt="Logo Klinik" class="h-16 mb-4" tabindex="0">
+                <img src="{{ asset('image/SMILE-LOGO-3.svg') }}" alt="SMILE" class="h-16 mb-4" tabindex="0">
             </a>
             <p class="text-sm text-gray-300" tabindex="0">SMILE adalah klinik gigi yang berdedikasi memberikan layanan
                 kesehatan gigi terbaik dengan teknologi modern dan tenaga medis profesional.</p>

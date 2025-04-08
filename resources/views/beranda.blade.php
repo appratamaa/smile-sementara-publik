@@ -74,25 +74,27 @@
                     <!-- Informasi Data -->
                     <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-white p-4 rounded-lg border border-gray-300">
-                            <h4 class="text-lg font-semibold">Total Pasien</h4>
-                            <p class="text-2xl font-bold text-blue-600">120</p>
+                            <h4 class="text-lg font-semibold">Total Pasien Hari Ini</h4>
+                            <p class="text-2xl font-bold text-blue-600">{{ $totalPasien }}</p>
                         </div>
                         <div class="bg-white p-4 rounded-lg border border-gray-300">
-                            <h4 class="text-lg font-semibold">Antrian Anda</h4>
-                            <p class="text-2xl font-bold text-green-600">15</p>
+                            <h4 class="text-lg font-semibold">Antrean Anda</h4>
+                            <!-- Antrian Anda -->
+                            <p class="text-2xl font-bold text-green-600">A-{{ $nomorAntreanAnda ?? '-' }}</p>
                         </div>
                         <div class="bg-white p-4 rounded-lg border border-gray-300">
                             <h4 class="text-lg font-semibold">Sisa Antrian</h4>
-                            <p class="text-2xl font-bold text-red-600">7</p>
+                            <p class="text-2xl font-bold text-red-600">{{ $sisaAntrian }}</p>
                         </div>
                     </div>
+
                     <!-- Riwayat Kunjungan -->
                     <div class="mt-8 bg-white p-6 rounded-lg shadow-md">
                         <h3 class="text-xl font-semibold mb-4">Riwayat Kunjungan</h3>
-                        <div class="overflow-x-auto">
+                        <div class="overflow-x-auto max-h-80 overflow-y-auto">
                             <table class="w-full border-collapse border border-gray-300">
                                 <thead>
-                                    <tr class="bg-blue-600 text-white">
+                                    <tr class="bg-blue-500 text-white">
                                         <th class="border border-gray-300 px-4 py-2">No</th>
                                         <th class="border border-gray-300 px-4 py-2">Tanggal Kunjungan</th>
                                         <th class="border border-gray-300 px-4 py-2">Tujuan</th>
@@ -110,16 +112,14 @@
                                                 {{ $kunjungan->tujuan }}</td>
                                             <td class="border border-gray-300 px-4 py-2 text-center">
                                                 <button
-                                                    class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+                                                    class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
                                                     onclick="showAntrean(
-        '{{ $kunjungan->id }}',
-        '{{ $kunjungan->tanggal }}',
-        '{{ $kunjungan->tujuan }}',
-        '{{ 'A-' . str_pad($kunjungan->id, 3, '0', STR_PAD_LEFT) }}'
-    )">
-                                                    Lihat Tiket
-                                                </button>
-
+                                    '{{ $kunjungan->id }}',
+                                    '{{ $kunjungan->tanggal }}',
+                                    '{{ $kunjungan->tujuan }}',
+                                    '{{ 'A-' . str_pad($kunjungan->nomor_antrean, 3, '0', STR_PAD_LEFT) }}'
+                                )">Lihat
+                                                    Tiket</button>
                                             </td>
                                         </tr>
                                     @empty
@@ -132,9 +132,10 @@
                             </table>
                         </div>
                     </div>
+
                     <!-- Tiket Antrean dan Form Ulasan -->
                     <div id="tiketAntrean" class="hidden mt-8 bg-white p-6 rounded-lg shadow-md">
-                        <h3 class="text-xl font-semibold mb-4 text-blue-700">Tiket Antrean</h3>
+                        <h3 class="text-xl font-semibold mb-4 text-blue-500">Tiket Antrean</h3>
                         <p><strong>Tanggal Kunjungan:</strong> <span id="tiketTanggal"></span></p>
                         <p><strong>Tujuan:</strong> <span id="tiketTujuan"></span></p>
                         <p><strong>Nomor Antrean:</strong> <span id="tiketNomor"></span></p>
@@ -144,16 +145,18 @@
                         <input type="hidden" id="appointment_id" value="">
 
                         <h4 class="text-lg font-semibold mb-2 text-gray-700">Beri Ulasan</h4>
-                        <div class="flex items-center mb-4" id="rating-stars">
+                        <div class="flex items-center mb-2" id="rating-stars">
                             @for ($i = 1; $i <= 5; $i++)
-                                <span class="star text-3xl cursor-pointer text-gray-300"
+                                <span class="star text-3xl cursor-pointer text-gray-300 mr-1"
                                     data-value="{{ $i }}">&#9733;</span>
                             @endfor
                         </div>
+                        <p id="ratingLabel" class="text-sm text-gray-500 italic mb-4">Pilih rating</p>
+
                         <textarea id="komentar" class="w-full border border-gray-300 rounded p-2" rows="3"
                             placeholder="Tulis komentar..."></textarea>
                         <button onclick="submitUlasan()"
-                            class="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded">Kirim
+                            class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">Kirim
                             Ulasan</button>
 
                         <div id="ulasanHasil" class="mt-4 hidden">
@@ -167,102 +170,135 @@
 
                         <script>
                             let selectedRating = 0;
-                        
+
+                            const ratingLabels = {
+                                1: 'Sangat tidak memuaskan',
+                                2: 'Tidak memuaskan',
+                                3: 'Cukup',
+                                4: 'Memuaskan',
+                                5: 'Sangat memuaskan'
+                            };
+
                             function showAntrean(id, tanggal, tujuan, nomor) {
-                                document.getElementById('tiketAntrean').classList.remove('hidden');
+                                const tiketElement = document.getElementById('tiketAntrean');
+                                tiketElement.classList.remove('hidden');
                                 document.getElementById('appointment_id').value = id;
-                        
-                                const options = { day: '2-digit', month: 'long', year: 'numeric' };
+
+                                // Tampilkan data tiket
+                                const options = {
+                                    day: '2-digit',
+                                    month: 'long',
+                                    year: 'numeric'
+                                };
                                 document.getElementById('tiketTanggal').textContent = new Date(tanggal).toLocaleDateString('id-ID', options);
                                 document.getElementById('tiketTujuan').textContent = tujuan;
                                 document.getElementById('tiketNomor').textContent = nomor;
-                        
-                                // Reset sebelumnya
+
+                                // Reset form ulasan
                                 selectedRating = 0;
                                 document.getElementById('komentar').value = '';
                                 document.getElementById('ulasanHasil').classList.add('hidden');
                                 document.querySelectorAll('.star').forEach(s => s.style.color = '#d1d5db');
-                        
-                                // Cek apakah sudah ada ulasan sebelumnya
-                                fetch(`/ulasan/${id}`) // Ganti endpoint ini sesuai rute di backend kamu
+                                document.getElementById('ratingLabel').textContent = 'Pilih rating';
+
+                                // Scroll ke bagian tiket
+                                setTimeout(() => {
+                                    tiketElement.scrollIntoView({
+                                        behavior: 'smooth'
+                                    });
+                                }, 200);
+
+                                // Cek apakah sudah ada ulasan
+                                fetch(`/ulasan/${id}`)
                                     .then(response => response.json())
                                     .then(data => {
                                         if (data.found) {
                                             selectedRating = data.rating;
                                             document.getElementById('komentar').value = data.komentar;
-                        
-                                            // Tampilkan hasil ulasan
+
+                                            // Update tampilan hasil ulasan
                                             const ulasanRatingDiv = document.getElementById('ulasanRating');
                                             const ulasanKomentarP = document.getElementById('ulasanKomentar');
                                             const hasilContainer = document.getElementById('ulasanHasil');
-                        
+
                                             ulasanRatingDiv.innerHTML = '';
                                             for (let i = 1; i <= 5; i++) {
-                                                ulasanRatingDiv.innerHTML += `<span class="${i <= selectedRating ? 'text-yellow-400' : 'text-gray-300'}">&#9733;</span>`;
+                                                ulasanRatingDiv.innerHTML +=
+                                                    `<span class="${i <= selectedRating ? 'text-yellow-400' : 'text-gray-300'}">&#9733;</span>`;
                                             }
-                        
+
                                             ulasanKomentarP.textContent = data.komentar;
                                             hasilContainer.classList.remove('hidden');
+                                            document.getElementById('ratingLabel').textContent = ratingLabels[selectedRating] || '';
                                         }
                                     });
                             }
-                        
-                            // Bintang interaktif
+
+                            // Interaksi klik bintang
                             document.querySelectorAll('.star').forEach(star => {
-                                star.addEventListener('click', function () {
+                                star.addEventListener('click', function() {
                                     selectedRating = this.getAttribute('data-value');
                                     document.querySelectorAll('.star').forEach(s => {
-                                        s.style.color = s.getAttribute('data-value') <= selectedRating ? '#facc15' : '#d1d5db';
+                                        s.style.color = s.getAttribute('data-value') <= selectedRating ? '#facc15' :
+                                            '#d1d5db';
                                     });
+                                    document.getElementById('ratingLabel').textContent = ratingLabels[selectedRating] || '';
                                 });
                             });
-                        
+
                             function submitUlasan() {
                                 const appointmentId = document.getElementById('appointment_id').value;
                                 const komentar = document.getElementById('komentar').value;
-                        
+
                                 fetch('{{ route('ulasan.store') }}', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                    },
-                                    body: JSON.stringify({
-                                        appointment_id: appointmentId,
-                                        rating: selectedRating,
-                                        komentar: komentar
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        },
+                                        body: JSON.stringify({
+                                            appointment_id: appointmentId,
+                                            rating: selectedRating,
+                                            komentar: komentar
+                                        })
                                     })
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    if (data.success) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Ulasan Terkirim!',
-                                            text: 'Terima kasih atas ulasan Anda.',
-                                            timer: 2000,
-                                            showConfirmButton: false
-                                        });
-                        
-                                        // Tampilkan ulang ulasan yang dikirim
-                                        const ulasanRatingDiv = document.getElementById('ulasanRating');
-                                        const ulasanKomentarP = document.getElementById('ulasanKomentar');
-                                        const hasilContainer = document.getElementById('ulasanHasil');
-                        
-                                        ulasanRatingDiv.innerHTML = '';
-                                        for (let i = 1; i <= 5; i++) {
-                                            ulasanRatingDiv.innerHTML += `<span class="${i <= selectedRating ? 'text-yellow-400' : 'text-gray-300'}">&#9733;</span>`;
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.success) {
+                                            // SweetAlert hasil ulasan
+                                            Swal.fire({
+                                                icon: 'success',
+                                                title: 'Ulasan Terkirim!',
+                                                html: `<div class="text-yellow-400 text-2xl mb-2">
+                                                    ${'&#9733;'.repeat(selectedRating)}${'&#9734;'.repeat(5 - selectedRating)}
+                                                    </div>
+                                                    <p class="text-gray-700">Terima kasih atas ulasan Anda.</p>`,
+                                                showConfirmButton: false,
+                                                timer: 2500
+                                            });
+
+                                            // Tampilkan ulang ulasan yang dikirim
+                                            const ulasanRatingDiv = document.getElementById('ulasanRating');
+                                            const ulasanKomentarP = document.getElementById('ulasanKomentar');
+                                            const hasilContainer = document.getElementById('ulasanHasil');
+
+                                            ulasanRatingDiv.innerHTML = '';
+                                            for (let i = 1; i <= 5; i++) {
+                                                ulasanRatingDiv.innerHTML +=
+                                                    `<span class="${i <= selectedRating ? 'text-yellow-400' : 'text-gray-300'}">&#9733;</span>`;
+                                            }
+
+                                            ulasanKomentarP.textContent = komentar;
+                                            hasilContainer.classList.remove('hidden');
+
+                                            // Reset bintang dan komentar
+                                            document.querySelectorAll('.star').forEach(s => s.style.color = '#d1d5db');
+                                            document.getElementById('komentar').value = '';
+                                            document.getElementById('ratingLabel').textContent = 'Pilih rating';
                                         }
-                        
-                                        ulasanKomentarP.textContent = komentar;
-                                        hasilContainer.classList.remove('hidden');
-                        
-                                        document.querySelectorAll('.star').forEach(s => s.style.color = '#d1d5db');
-                                        document.getElementById('komentar').value = '';
-                                    }
-                                });
+                                    });
                             }
-                        </script>                        
+                        </script>
                     </div>
 
                     <!-- Riwayat Penyakit -->
@@ -272,13 +308,13 @@
                         @if ($riwayatKunjungan->isEmpty())
                             <p class="text-gray-500 italic">Belum ada data riwayat penyakit yang tersedia.</p>
                         @else
-                            <ul class="list-disc list-inside text-gray-700">
-                                @foreach ($riwayatKunjungan as $riwayat)
-                                    <li>
-                                        {{ $riwayat->tujuan }}
-                                    </li>
-                                @endforeach
-                            </ul>
+                            <div class="max-h-48 overflow-y-auto">
+                                <ul class="list-disc list-inside text-gray-700">
+                                    @foreach ($riwayatKunjungan as $riwayat)
+                                        <li>{{ $riwayat->tujuan }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         @endif
                     </div>
 
@@ -289,13 +325,13 @@
                         @if ($riwayatKunjungan->isEmpty())
                             <p class="text-gray-500 italic">Belum ada data riwayat perawatan yang tersedia.</p>
                         @else
-                            <ul class="list-disc list-inside text-gray-700">
-                                @foreach ($riwayatKunjungan as $riwayat)
-                                    <li>
-                                        {{ $riwayat->tanggal->format('d M Y') }}
-                                    </li>
-                                @endforeach
-                            </ul>
+                            <div class="max-h-48 overflow-y-auto">
+                                <ul class="list-disc list-inside text-gray-700">
+                                    @foreach ($riwayatKunjungan as $riwayat)
+                                        <li>{{ $riwayat->tanggal->format('d M Y') }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         @endif
                     </div>
                 </main>

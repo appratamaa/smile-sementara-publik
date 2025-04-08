@@ -4,16 +4,16 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
-                <div class="shrink-0">
-                    <a href="/">
-                        <img class="w-18 h-16" src="image/SMILE-LOGO-5.svg" alt="SMILE">
-                    </a>
+                <div class="flex items-center">
+                    <div class="shrink-0">
+                        <img class="w-18 h-16" src="{{ asset('image/SMILE-LOGO-5.svg') }}" alt="SMILE">
+                    </div>
                 </div>
 
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <x-nav-link href="/welcome" :active="request()->is('welcome')">Beranda</x-nav-link>
-                        <x-nav-link href="/artikel" :active="request()->is('artikel')">Artikel</x-nav-link>
+                        <x-nav-link href="/artikel" :active="request()->is('artikel*')">Artikel</x-nav-link>
                         <x-nav-link href="/chatdokter" :active="request()->is('chatdokter')">Hubungi Dokter</x-nav-link>
                         <x-nav-link href="/informasi" :active="request()->is('informasi')">Informasi</x-nav-link>
                         <x-nav-link href="/lainnya" :active="request()->is('lainnya')">Lainnya</x-nav-link>
