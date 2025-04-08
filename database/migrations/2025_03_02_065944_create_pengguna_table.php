@@ -13,12 +13,12 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('nomor_hp')->unique();
             $table->string('kata_sandi');
-            $table->string('usia')->default('Perlu diisi!');
-            $table->string('tinggi_badan')->default('Perlu diisi!');
-            $table->string('berat_badan')->default('Perlu diisi!');
-            $table->string('jenis_kelamin')->default('Perlu diisi!');
-            $table->string('penyakit_genetik')->default('Perlu diisi!');
-            $table->text('alamat')->default('Perlu diisi!');
+            $table->string('usia')->default('-');
+            $table->string('tinggi_badan')->default('-');
+            $table->string('berat_badan')->default('-');
+            $table->string('jenis_kelamin')->default('-');
+            $table->string('penyakit_genetik')->default('-');
+            $table->text('alamat')->default('-');
             $table->timestamps();
         });        
     }

@@ -75,13 +75,9 @@
                     <div class="mt-6 bg-white p-6 rounded-lg shadow-md flex flex-col md:flex-row items-center gap-6">
                         <!-- Foto Profil -->
                         <div class="relative">
-                            <img src="https://via.placeholder.com/150" alt="Foto Profil"
-                                class="w-32 h-32 rounded-full border border-gray-300">
-                            <label for="upload-photo"
-                                class="absolute bottom-0 right-0 bg-blue-500 text-white p-2 rounded-full cursor-pointer">
-                                &#9998;
-                            </label>
-                            <input type="file" id="upload-photo" class="hidden">
+                            <img src="{{ asset($pengguna->foto_profil ?? 'foto_profil/Foto-Profil-Default.png') }}"
+                                alt="Foto Profil" class="w-44 h-41 rounded-full border border-gray-300">
+
                         </div>
 
                         <!-- Informasi Profil -->
@@ -130,9 +126,10 @@
 
                             <!-- Tombol Edit -->
                             <div class="mt-4 text-right">
-                                <a href="{{ route('profil.edit', $pengguna->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                                <a href="{{ route('edit.profil', $pengguna->id) }}"
+                                    class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
                                     Edit Profil
-                                </a>                                
+                                </a>
                             </div>
                         </div>
                     </div>

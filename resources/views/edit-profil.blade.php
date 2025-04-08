@@ -55,7 +55,8 @@
                 <div class="bg-white p-6 rounded-lg shadow-md">
                     <h2 class="text-2xl font-bold mb-4">Edit Profil</h2>
 
-                    <form action="{{ route('profil.update', $pengguna->id) }}" method="POST">
+                    <form id="editProfilForm" action="{{ route('update.profil', $pengguna->id) }}" method="POST">
+
                         @csrf
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -120,45 +121,67 @@
                         </div>
 
                         <div class="mt-6 text-right">
-                            <button type="submit"
-                                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+                            <button id="submit-button" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
                                 Simpan Perubahan
                             </button>
+                            
                         </div>
                     </form>
-                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-                    @if (session('success'))
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                Swal.fire({
-                                    icon: 'success',
-                                    title: 'Berhasil!',
-                                    text: '{{ session('success') }}',
-                                    timer: 2500,
-                                    showConfirmButton: false
-                                });
-                            });
-                        </script>
-                    @endif
-
-                    @if ($errors->any())
-                        <script>
-                            document.addEventListener('DOMContentLoaded', function() {
-                                Swal.fire({
-                                    icon: 'error',
-                                    title: 'Gagal!',
-                                    text: '{{ $errors->first() }}',
-                                    showConfirmButton: true
-                                });
-                            });
-                        </script>
-                    @endif
                 </div>
             </main>
+           
         </div>
+        <x-footer />    
     </div>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('editProfilForm');
+    
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+    
+                const formData = new FormData(form);
+    
+                fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json',
+                    },
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Berhasil!',
+                            text: data.message,
+                            timer: 2000,
+                            showConfirmButton: false
+                        }).then(() => {
+                            window.location.href = data.redirect_url;
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Gagal!',
+                            text: 'Terjadi kesalahan saat memperbarui data.',
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Gagal!',
+                        text: 'Terjadi kesalahan pada server.',
+                    });
+                });
+            });
+        });
+    </script> 
+    
 </body>
 
 </html>

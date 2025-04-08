@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        'pengguna' => [
+            'driver' => 'session',
+            'provider' => 'pengguna',
+        ],
     ],
 
     /*
@@ -62,14 +67,18 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Masuk::class),
+            'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'pengguna' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Pengguna::class,
+        ],
     ],
+    // 'users' => [
+    //     'driver' => 'database',
+    //     'table' => 'users',
+    // ],
 
     /*
     |--------------------------------------------------------------------------

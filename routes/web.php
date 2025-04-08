@@ -16,6 +16,7 @@ use App\Http\Controllers\ChatKlinikController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
 use App\Http\Controllers\JadwalPraktikController;
+use App\Models\Appointment;
 
 // User Routes
 Route::get('/', function () {
@@ -37,13 +38,50 @@ Route::post('/keluar', function () {
     return redirect()->route('masuk'); // Pastikan 'masuk' adalah nama route yang benar
 })->name('keluar');
 
+// Route::get('/beranda', function () {
+//     $pengguna = session('pengguna');
+//     $riwayatKunjungan = \App\Models\Appointment::where('nomor_hp', $pengguna->nomor_hp)->get();
+
+//     return view('beranda', compact('pengguna', 'riwayatKunjungan'));
+// })->name('beranda');
 Route::get('/beranda', function () {
     $pengguna = session('pengguna');
-    $riwayatKunjungan = \App\Models\Appointment::where('nomor_hp', $pengguna->nomor_hp)->get();
+    $today = now()->toDateString();
 
-    return view('beranda', compact('pengguna', 'riwayatKunjungan'));
+    if (!$pengguna) {
+        return redirect()->route('masuk')->with('error', 'Silakan login terlebih dahulu.');
+    }
+
+    // Riwayat kunjungan pengguna
+    $riwayatKunjungan = Appointment::where('nomor_hp', $pengguna->nomor_hp)->get();
+
+    // Total pasien hari ini
+    $totalPasien = Appointment::whereDate('tanggal', $today)->count();
+
+    // Ambil antrean pengguna hari ini
+    $antrianTerakhir = Appointment::where('nomor_hp', $pengguna->nomor_hp)
+        ->whereDate('tanggal', $today)
+        ->latest('id')
+        ->first();
+
+    $nomorAntreanAnda = $antrianTerakhir ? $antrianTerakhir->nomor_antrean : null;
+
+    // Hitung sisa antrian (yang nomornya lebih kecil dari antrean pengguna)
+    $sisaAntrian = $nomorAntreanAnda
+        ? Appointment::where('nomor_antrean', '<', $nomorAntreanAnda)
+            ->whereDate('tanggal', $today)
+            ->count()
+        : 0;
+        
+
+    return view('beranda', compact(
+        'pengguna',
+        'riwayatKunjungan',
+        'totalPasien',
+        'nomorAntreanAnda',
+        'sisaAntrian'
+    ));
 })->name('beranda');
-
 
 Route::get('/buatjanji', function () {
     $pengguna = session('pengguna'); // Ambil data pengguna dari sesi
@@ -97,8 +135,10 @@ Route::get('/profil', function () {
 
 
 //Akses Edit Profil
-Route::get('/profil/{id}/edit', [PenggunaController::class, 'edit'])->name('profil.edit');
-Route::post('/profil/{id}/update', [PenggunaController::class, 'update'])->name('profil.update');
+Route::get('/profil/{id}', [PenggunaController::class, 'showProfil'])->name('profil');
+Route::get('/edit-profil/{id}', [PenggunaController::class, 'edit'])->name('edit.profil');
+Route::post('/update-profil/{id}', [PenggunaController::class, 'update'])->name('update.profil');
+
 
 Route::get('/antrean/{id}', [AppointmentController::class, 'show'])->name('antrean.show');
 
@@ -122,6 +162,8 @@ Route::post('/chatklinik/send', [ChatKlinikController::class, 'send']);
 
 Route::get('/chatklinik', [ChatKlinikController::class, 'index']);
 Route::post('/chatklinik', [ChatKlinikController::class, 'send'])->name('chatklinik.kirim');
+
+
 
 
 
@@ -177,3 +219,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/chat/{id}', [ChatKlinikController::class, 'adminChatDetail'])->name('admin.chat.detail');
     Route::post('/admin/chat/{id}', [ChatKlinikController::class, 'adminSendMessage'])->name('admin.chat.send');
 });
+
+
