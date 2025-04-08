@@ -12,7 +12,7 @@
             </li>
             <li>
                 <a href="/profil"
-                    :class="active === '/profil' ? 'text-blue-500 border-b-2 border-blue-500' :
+                    :class="active.includes('/profil') ? 'text-blue-500 border-b-2 border-blue-500' :
                         'text-black hover:text-blue-500 hover:border-b-2 hover:border-blue-500'"
                     class="block py-2 px-4 rounded transition duration-300">
                     Profil
@@ -30,6 +30,24 @@
                         'text-black hover:text-blue-500 hover:border-b-2 hover:border-blue-500'"
                     class="block py-2 px-4 rounded transition duration-300">
                     Chat Dokter
+                </a>
+            </li>
+
+            <!-- Garis Dash -->
+            <li>
+                <div class="border-t-2 border-dashed border-gray-300 mt-28"></div>
+            </li>
+
+            <!-- Tombol Logout -->
+            <li>
+                <a href="#" @click="logout"
+                    class="mt-2 flex items-center gap-2 py-2 px-4 rounded transition duration-300 text-red-500 hover:text-red-600 hover:border-b-2 hover:border-red-500">
+                    <span>Keluar</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h3a2 2 0 002-2V5a2 2 0 00-2-2h-3a2 2 0 00-2 2v1" />
+                    </svg>
                 </a>
             </li>
         </ul>
@@ -53,7 +71,7 @@
                     <input type="text" name="nomor_hp" id="nomor_hp"
                         value="{{ old('nomor_hp', $pengguna->nomor_hp ?? '') }}"
                         class="w-full mt-1 p-2 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        placeholder="Masukkan nomor HP">
+                        placeholder="085xxxxxxxxx">
                 </div>
 
                 <!-- Nama -->
@@ -61,7 +79,7 @@
                     <label for="nama" class="block text-gray-700 text-sm">Nama Lengkap</label>
                     <input type="text" name="nama" id="nama"
                         class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                        placeholder="Masukkan nama Anda" required>
+                        placeholder="Matt Wijaya" required>
                 </div>
 
                 <!-- Usia & Jenis Kelamin -->
@@ -70,7 +88,7 @@
                         <label for="usia" class="block text-gray-700 text-sm">Usia</label>
                         <input type="number" name="usia" id="usia"
                             class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                            placeholder="Usia" min="0" required>
+                            placeholder="21" min="0" required>
                     </div>
                     <div class="w-1/2">
                         <label for="jenis_kelamin" class="block text-gray-700 text-sm">Jenis Kelamin</label>
@@ -86,10 +104,10 @@
 
                 <!-- Alamat -->
                 <div class="mb-3">
-                    <label for="alamat" class="block text-gray-700 text-sm">Alamat Singkat</label>
+                    <label for="alamat" class="block text-gray-700 text-sm">Alamat</label>
                     <input type="text" name="alamat" id="alamat"
                         class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                        placeholder="Alamat Anda" required>
+                        placeholder="Cijulang, Pangandaran" required>
                 </div>
 
                 <!-- Tanggal & Tujuan -->
@@ -100,19 +118,33 @@
                         required>
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-4" x-data="{ tujuan: '', lainnya: '' }">
                     <label for="tujuan" class="block text-gray-700 text-sm">Tujuan</label>
-                    <select name="tujuan" id="tujuan"
+                    <select name="tujuan_select" id="tujuan"
                         class="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                        required>
-                        <option>Pemeriksaan Rutin</option>
-                        <option>Cabut Gigi</option>
-                        <option>Pasang Behel</option>
-                        <option>Pembersihan Karang Gigi</option>
-                        <option>Tambal Gigi</option>
-                        <option>Pembuatan Gigi Palsu</option>
-                        <option>Perawatan Saluran Akar</option>
+                        x-model="tujuan" required>
+                        <option disabled selected value="">Pilih tujuan...</option>
+                        <option value="Pemeriksaan Rutin">Pemeriksaan Rutin</option>
+                        <option value="Cabut Gigi">Cabut Gigi</option>
+                        <option value="Pasang Behel">Pasang Behel</option>
+                        <option value="Pembersihan Karang Gigi">Pembersihan Karang Gigi</option>
+                        <option value="Tambal Gigi">Tambal Gigi</option>
+                        <option value="Pembuatan Gigi Palsu">Pembuatan Gigi Palsu</option>
+                        <option value="Perawatan Saluran Akar">Perawatan Saluran Akar</option>
+                        <option value="Lainnya">Lainnya</option>
                     </select>
+
+                    <!-- Input muncul kalau pilih Lainnya -->
+                    <template x-if="tujuan === 'Lainnya'">
+                        <input type="text" name="tujuan"
+                            class="w-full mt-2 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            placeholder="Tuliskan tujuan lainnya..." x-model="lainnya" required>
+                    </template>
+
+                    <!-- Hidden input untuk tujuan jika tidak 'Lainnya' -->
+                    <template x-if="tujuan !== 'Lainnya' && tujuan !== ''">
+                        <input type="hidden" name="tujuan" :value="tujuan">
+                    </template>
                 </div>
 
                 <!-- Tombol Submit -->
@@ -121,9 +153,10 @@
                     Buat Janji
                 </button>
             </form>
+
             <script>
                 document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-                    e.preventDefault(); // mencegah reload
+                    e.preventDefault();
 
                     const form = e.target;
                     const formData = new FormData(form);
@@ -143,8 +176,8 @@
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(() => {
-                                form.reset(); // reset form
-                                document.querySelector('[x-data]').__x.$data.openModal = false; // tutup modal
+                                form.reset();
+                                document.querySelector('[x-data]').__x.$data.openModal = false;
                             });
                         })
                         .catch(error => {
@@ -153,25 +186,8 @@
                         });
                 });
             </script>
-
         </div>
     </div>
-
-    <li>
-        <!-- Garis Dash -->
-        <div class="border-t-2 border-dashed border-gray-300 mt-28"></div>
-
-        <!-- Tombol Logout -->
-        <a href="#" @click="logout"
-            class="mt-2 flex items-center gap-2 py-2 px-4 rounded transition duration-300 text-red-500 hover:text-red-600 hover:border-b-2 hover:border-red-500">
-            <span>Keluar</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 002 2h3a2 2 0 002-2V5a2 2 0 00-2-2h-3a2 2 0 00-2 2v1" />
-            </svg>
-        </a>
-    </li>
 
     <!-- Tambahkan SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -188,11 +204,9 @@
                 confirmButtonText: "Ya, Keluar"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Simulasi proses logout (hapus token/session)
-                    localStorage.removeItem("userToken"); // Sesuaikan dengan sistem autentikasi
+                    localStorage.removeItem("userToken");
                     sessionStorage.clear();
 
-                    // Notifikasi berhasil logout
                     Swal.fire({
                         title: "Berhasil Keluar!",
                         text: "Anda telah berhasil keluar.",
@@ -201,14 +215,11 @@
                         showConfirmButton: false
                     });
 
-                    // Redirect setelah delay
                     setTimeout(() => {
-                        window.location.href = "/masuk"; // Ubah ke halaman login
+                        window.location.href = "/masuk";
                     }, 2000);
                 }
             });
         }
     </script>
-
-    </ul>
-    </nav>
+</div>

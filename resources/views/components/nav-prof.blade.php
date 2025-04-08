@@ -5,7 +5,7 @@
         <div class="flex h-16 items-center justify-between">
             <div class="flex items-center">
                 <div class="shrink-0">
-                    <img class="w-18 h-16" src="image/SMILE-LOGO-5.svg" alt="SMILE">
+                    <img class="w-18 h-16" src="{{ asset('image/SMILE-LOGO-5.svg') }}" alt="SMILE">
                 </div>
             </div>
             <div class="hidden md:block">
@@ -35,13 +35,13 @@
                     <div class="hidden md:block">
                         <div x-data="{
                                 isOpen: false,
-                                selectedImage: '{{ $pengguna->foto_profil ?? 'https://via.placeholder.com/40' }}',
+                                selectedImage: '{{ asset($pengguna->foto_profil ?? 'foto_profil/Foto-Profil-Default.png') }}',
                                 isEditing: false,
                             
                             }" class="relative">
                     
                             <!-- Nama Pengguna & Foto Profil -->
-                            <button @click="isOpen = !isOpen" class="focus:outline-none flex items-center space-x-4 ml-20">
+                            <button @click="window.location.href='/profil'" class="focus:outline-none flex items-center space-x-4 ml-20">
                                 <div class="text-black font-medium">
                                     {{ $pengguna->nama_lengkap ?? 'Pengguna' }}
                                 </div>
