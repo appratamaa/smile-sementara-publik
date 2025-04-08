@@ -42,24 +42,29 @@
                 </section>
             </div>
         </main>
-        
-                
 
                 <!-- Section Jadwal Praktik -->
-                <div class="mt-10 py-5" data-aos="fade-up">
-                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 mt-8" data-aos="zoom-in">Jadwal Praktik</h2>
-                    <p class="text-start text-gray-600">Klik salah satu jadwal yang tersedia untuk reservasi</p>
-                    <!-- Tombol Navigasi Bulan -->
-                    <div class="flex justify-between mb-4" data-aos="zoom-in">
-                        <button class="bg-gray-500 text-white px-4 py-2 rounded" id="prevMonthBtn">Previous
-                            Bulan</button>
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded" id="nextMonthBtn">Next Bulan</button>
+                    <div class="mt-10 py-5" data-aos="fade-up">
+                        <h2 class="text-3xl font-bold tracking-tight text-gray-900 mt-8" data-aos="zoom-in">Jadwal Praktik</h2>
+                        <p class="text-start text-gray-600 mb-4">Klik salah satu jadwal yang tersedia untuk reservasi</p>
+                    
+                        <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                            @forelse ($jadwalPraktik as $jadwal)
+                                @php
+                                    $tanggal = \Carbon\Carbon::parse($jadwal->tanggal)->translatedFormat('l, j F Y');
+                                    $tersedia = strtolower($jadwal->status) === 'tersedia';
+                                @endphp
+                                <div class="p-4 rounded-lg shadow text-center {{ $tersedia ? 'bg-blue-100 text-blue-800' : 'bg-gray-200 text-gray-700' }}">
+                                    <p class="font-semibold">{{ $tanggal }}</p>
+                                    <p class="text-sm mt-1">{{ $tersedia ? 'Tersedia' : 'Tidak Tersedia' }}</p>
+                                </div>
+                            @empty
+                                <div class="col-span-full text-center text-gray-500 py-4">
+                                    Tidak ada jadwal praktik.
+                                </div>
+                            @endforelse
+                        </div>
                     </div>
-                    <!-- Kartu Tanggal Bulan -->
-                    <div class="grid grid-cols-5 gap-4" id="dateCards" data-aos="zoom-in">
-                        <!-- Kartu akan di-generate dengan JavaScript -->
-                    </div>
-                </div>
 
                 <!-- Popup Form Reservasi -->
                 <div id="popupForm"
@@ -91,7 +96,6 @@
         <x-footer data-aos="fade-up"></x-footer>
     </div>
 
-    <!-- Script -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -100,86 +104,7 @@
                 once: true, // Animasi hanya terjadi sekali saat konten di-scroll
             });
         });
-
-        function handleCardClick(serviceName) {
-            alert(`Anda memilih layanan: ${serviceName}`);
-        }
-
-        const dateCards = document.getElementById('dateCards');
-        const nextMonthBtn = document.getElementById('nextMonthBtn');
-        const prevMonthBtn = document.getElementById('prevMonthBtn');
-        const popupForm = document.getElementById('popupForm');
-        const selectedDateInput = document.getElementById('selectedDate');
-        const closePopup = document.getElementById('closePopup');
-        const reservationForm = document.getElementById('reservationForm');
-
-        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September",
-            "Oktober", "November", "Desember"
-        ];
-
-        let currentDate = new Date();
-        let currentMonth = currentDate.getMonth();
-        let currentYear = currentDate.getFullYear();
-
-        function generateDateCards(month, year) {
-            dateCards.innerHTML = '';
-            const firstDay = new Date(year, month, 1);
-            const lastDay = new Date(year, month + 1, 0);
-
-            for (let day = firstDay.getDate(); day <= lastDay.getDate(); day++) {
-                const date = new Date(year, month, day);
-                const dayName = date.toLocaleDateString('id-ID', { weekday: 'long' });
-                const formattedDate = `${dayName}, ${day} ${monthNames[month]} ${year}`;
-                const isAvailable = Math.random() > 0.5; // Simulasi ketersediaan
-                const cardColor = isAvailable ? 'bg-blue-100 text-blue-500' : 'bg-gray-300 text-gray-600';
-                const availabilityText = isAvailable ? 'Tersedia' : 'Tidak Tersedia';
-
-                const card = document.createElement('div');
-                card.className = `p-4 text-center rounded-lg cursor-pointer ${cardColor}`;
-                card.innerHTML = `<strong>${formattedDate}</strong><br><span class="text-xs">${availabilityText}</span>`;
-                if (isAvailable) {
-                    card.addEventListener('click', () => openPopup(formattedDate));
-                }
-                dateCards.appendChild(card);
-            }
-        }
-
-        nextMonthBtn.addEventListener('click', () => {
-            currentMonth++;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear++;
-            }
-            generateDateCards(currentMonth, currentYear);
-        });
-
-        prevMonthBtn.addEventListener('click', () => {
-            currentMonth--;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear--;
-            }
-            generateDateCards(currentMonth, currentYear);
-        });
-
-        function openPopup(date) {
-            selectedDateInput.value = date;
-            popupForm.classList.remove("hidden");
-        }
-
-        closePopup.addEventListener('click', () => {
-            popupForm.classList.add("hidden");
-        });
-
-        reservationForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            const nama = document.getElementById("nama").value.trim();
-            const tujuan = document.getElementById("tujuan").value.trim();
-            alert(`Reservasi berhasil!\nTanggal: ${selectedDateInput.value}\nNama: ${nama}\nTujuan: ${tujuan}`);
-            popupForm.classList.add("hidden");
-        });
-
-        generateDateCards(currentMonth, currentYear);
+        
     </script>
 </body>
 </html>

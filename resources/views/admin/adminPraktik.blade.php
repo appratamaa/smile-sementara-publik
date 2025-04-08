@@ -9,10 +9,7 @@
 <body class="bg-gray-100 h-screen flex">
 
     <!-- Sidebar -->
-    <div class="w-64 bg-white shadow-md p-4 flex flex-col h-full">
-        <h1 class="text-left mb-4">
-            <img src="{{ asset('image/SMILE-LOGO.svg') }}" alt="Smile logo" class="h-10">
-        </h1>
+    <div>
         <x-sidebar-admin>
         </x-sidebar-admin>
         <form method="POST" action="{{ route('logout') }}">
