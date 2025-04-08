@@ -11,14 +11,9 @@ class Appointment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nama',
-        'usia',
-        'jenis_kelamin',
-        'alamat',
-        'tanggal',
-        'tujuan',
-        'nomor_hp',
-    ];
+        'nama', 'nomor_hp', 'usia', 'jenis_kelamin',
+        'alamat', 'tanggal', 'tujuan', 'nomor_antrean',
+    ];    
 
     protected $casts = [
         'tanggal' => 'datetime:Y-m-d', // Optional: bisa pakai 'datetime' saja kalau kamu mau pakai full datetime
