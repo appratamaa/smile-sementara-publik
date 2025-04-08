@@ -20,7 +20,7 @@ class ChatKlinikController extends Controller
         $dokter = User::where('role', 'dokter')->first();
 
         if (!$user || !$dokter) {
-            return redirect('/')->with('error', 'Data pengguna atau dokter tidak ditemukan.');
+            return redirect('masuk')->with('error', 'Data pengguna atau dokter tidak ditemukan.');
         }
 
         $chats = ChatMessage::where(function ($query) use ($user, $dokter) {
