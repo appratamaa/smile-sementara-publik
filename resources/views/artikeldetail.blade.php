@@ -12,7 +12,7 @@
     <title>{{ $artikel->judul_artikel }}</title>
 </head>
 
-<body class="bg-gray-100">
+<body class="bg-white">
     @include('components.navbar'),
     <main>
 
@@ -20,7 +20,7 @@
         <div class="container mx-auto p-6 max-w-4xl bg-white shadow-lg rounded-lg mt-6">
             <!-- Judul Artikel -->
             <h1 class="text-3xl font-bold text-gray-800">{{ $artikel->judul_artikel }}</h1>
-            <p class="text-gray-500 text-sm mt-1">{{ date('d M Y', strtotime($artikel->created_at)) }}</p>
+            <p class="text-gray-500 text-sm mt-1">{{ \Carbon\Carbon::parse($artikel->created_at)->format('d F Y') }}</p>
 
             <!-- Gambar Artikel -->
             <img src="{{ asset('gambar_artikel/' . $artikel['gambar']) }}" alt="{{ $artikel->judul_artikel }}"
@@ -34,7 +34,8 @@
 
         <!-- Konten Terkait -->
         <div class="container mx-auto p-6 max-w-4xl mt-8">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Baca Juga</h3>
+            <h3 class="text-2xl font-semibold text-gray-800 mb-2">Baca Juga</h3>
+            <div class="border-t-2 border-dashed border-gray-300 mb-12"></div>
             <div class="grid md:grid-cols-2 gap-6">
                 @foreach ($relatedArticles as $related)
                     <div class="bg-white shadow-md rounded-lg overflow-hidden">

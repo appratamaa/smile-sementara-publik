@@ -30,11 +30,11 @@ class ArtikelUserController extends Controller
         return view('welcome', compact('artikels', 'ulasans'));
     }
 
-    public function show($id)
+    public function show($judul_artikel)
     {
-        $artikel = ArtikelUser::findOrFail($id);
+        $artikel = ArtikelUser::findOrFail($judul_artikel);
 
-        $relatedArticles = ArtikelUser::where('id_artikel', '!=', $id)
+        $relatedArticles = ArtikelUser::where('id_artikel', '!=', $judul_artikel)
             ->latest()
             ->take(5)
             ->get();
