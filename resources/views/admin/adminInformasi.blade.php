@@ -52,53 +52,5 @@
             </form>
         </div>
 
-        <!-- Form Tambah Jadwal -->
-        <div class="bg-white shadow-md p-6 rounded">
-            <h2 class="text-xl font-semibold mb-4">Tambah Jadwal Praktik</h2>
-            <form id="addScheduleForm" action="#" method="POST">
-                @csrf
-                <div class="grid grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-sm font-medium">Tanggal</label>
-                        <input type="date" name="tanggal" class="mt-1 p-2 w-full border rounded">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium">Waktu</label>
-                        <input type="time" name="waktu" class="mt-1 p-2 w-full border rounded">
-                    </div>
-                </div>
-                <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Tambah Jadwal</button>
-            </form>            
-        </div>
-
-        <!-- Tabel Jadwal -->
-        <div class="bg-white shadow-md p-6 rounded">
-            <h2 class="text-xl font-semibold mb-4">Jadwal Praktik</h2>
-            <table class="w-full bg-white shadow-md rounded-lg overflow-hidden">
-                <thead class="bg-gray-200">
-                    <tr>
-                        <th class="p-2">Tanggal</th>
-                        <th class="p-2">Dokter</th>
-                        <th class="p-2">Waktu</th>
-                        <th class="p-2">Status</th>
-                        <th class="p-2">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="scheduleTable" class="text-center">
-                    <!-- Data jadwal akan diisi oleh JavaScript -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <script>
-        document.querySelectorAll('.w-64 a').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.w-64 a').forEach(link => link.classList.remove('bg-black', 'text-white'));
-                this.classList.add('bg-black', 'text-white');
-            });
-        });
-    </script>
-
 </body>
 </html>

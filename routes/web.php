@@ -18,6 +18,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
 use App\Http\Controllers\JadwalPraktikController;
 use App\Http\Controllers\SimpanInformasiController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use Illuminate\Support\Facades\Mail;
@@ -104,9 +105,9 @@ Route::post('/daftar', [PenggunaController::class, 'daftar']);
 Route::get('/artikel', function () {
     return view('artikel');
 })->name('artikel');
-Route::get('/informasi', function () {
-    return view('informasi');
-})->name('informasi');
+// Route::get('/informasi', function () {
+//     return view('informasi');
+// })->name('informasi');
 Route::get('/chatdokter', function () {
     return view('chatdokter');
 })->name('chatdokter');
@@ -195,9 +196,21 @@ Route::get('/tes-email', function () {
     Route::get('/adminInformasi', [InformasiController::class, 'index'])->name('admin.informasi.index');
     Route::post('/adminInformasi/store', [InformasiController::class, 'store'])->name('informasi.store');
     Route::view('/admin/Antrian', 'admin.adminPraktik');
-    Route::view('/adminInformasi', 'admin.adminInformasi');
-    Route::get('/informasi', [SimpanInformasiController::class, 'index']);
+    Route::get('/informasi', [JadwalController::class, 'showInformasi'])->name('informasi');
 
+    // TAMPILKAN halaman
+    Route::get('/praktik', [JadwalPraktikController::class, 'index'])->name('jadwal.index');
+
+    // TAMBAH data jadwal
+    Route::post('/praktik', [JadwalPraktikController::class, 'store'])->name('jadwal.store');
+
+    // HAPUS data jadwal
+    Route::delete('/praktik/{id}', [JadwalPraktikController::class, 'destroy'])->name('jadwal.destroy');
+
+    // UPDATE status jadwal
+    Route::put('/praktik/{id}', [JadwalPraktikController::class, 'update'])->name('jadwal.update');
+
+    Route::get('/informasi', [SimpanInformasiController::class, 'index']);
     Route::view('/adminAntrian', 'admin.adminAntrian');
     Route::view('/tes', 'admin.tesData');
     Route::post('/praktik', [JadwalPraktikController::class, 'store'])->name('jadwal.store');
