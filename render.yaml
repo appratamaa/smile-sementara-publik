@@ -1,45 +1,72 @@
-databases:
-  - name: laravel-mysql
-    databaseName: laravel_db
-    user: laravel_user
+# databases:
+#   - name: laravel-mysql
+#     databaseName: laravel_db
+#     user: laravel_user
+
+# services:
+#   - type: web
+#     name: laravel11-app
+#     env: php
+#     plan: free
+#     buildCommand: |
+#       composer install --no-dev --optimize-autoloader
+#       php artisan config:cache
+#       php artisan route:cache
+#       php artisan view:cache
+#     startCommand: php artisan serve --host 0.0.0.0 --port 10000
+#     envVars:
+#       - key: APP_ENV
+#         value: production
+#       - key: APP_KEY
+#         generateValue: true
+#       - key: APP_DEBUG
+#         value: false
+#       - key: DB_CONNECTION
+#         value: mysql
+#       - key: DB_HOST
+#         fromDatabase:
+#           name: laravel-mysql
+#           property: host
+#       - key: DB_PORT
+#         fromDatabase:
+#           name: laravel-mysql
+#           property: port
+#       - key: DB_DATABASE
+#         fromDatabase:
+#           name: laravel-mysql
+#           property: database
+#       - key: DB_USERNAME
+#         fromDatabase:
+#           name: laravel-mysql
+#           property: user
+#       - key: DB_PASSWORD
+#         fromDatabase:
+#           name: laravel-mysql
+#           property: password
 
 services:
   - type: web
-    name: laravel11-app
-    env: php
+    name: laravel-app
+    env: docker
     plan: free
-    buildCommand: |
-      composer install --no-dev --optimize-autoloader
-      php artisan config:cache
-      php artisan route:cache
-      php artisan view:cache
-    startCommand: php artisan serve --host 0.0.0.0 --port 10000
+    region: singapore
+    branch: main
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: APP_ENV
         value: production
       - key: APP_KEY
-        generateValue: true
-      - key: APP_DEBUG
-        value: false
+        value: your-app-key-here
       - key: DB_CONNECTION
         value: mysql
       - key: DB_HOST
-        fromDatabase:
-          name: laravel-mysql
-          property: host
+        value: your-db-host
       - key: DB_PORT
-        fromDatabase:
-          name: laravel-mysql
-          property: port
+        value: 3306
       - key: DB_DATABASE
-        fromDatabase:
-          name: laravel-mysql
-          property: database
+        value: your-db-name
       - key: DB_USERNAME
-        fromDatabase:
-          name: laravel-mysql
-          property: user
+        value: your-db-user
       - key: DB_PASSWORD
-        fromDatabase:
-          name: laravel-mysql
-          property: password
+        value: your-db-password
+
