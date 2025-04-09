@@ -254,7 +254,7 @@
                                         <i class="fa-star {{ $i <= $ulasan->rating ? 'fas text-yellow-400' : 'far text-gray-300' }}"></i>
                                     @endfor
                                 </div>
-                                <p class="text-gray-600 italic">"{{ $ulasan->komentar }}"</p>
+                                <p class="mt-2 text-gray-600 italic">"{{ $ulasan->komentar }}"</p>
                                 <p class="mt-4 font-semibold text-gray-800">
                                     - {{ $ulasan->appointment->nama ?? 'Pasien' }},
                                     {{ $ulasan->appointment->usia ?? '-' }} tahun

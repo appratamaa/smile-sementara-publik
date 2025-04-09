@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Appointment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
@@ -16,8 +17,12 @@ use App\Http\Controllers\ChatKlinikController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\ArtikelUserController;
 use App\Http\Controllers\JadwalPraktikController;
-use App\Models\Appointment;
 use App\Http\Controllers\SimpanInformasiController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TesEmail;
+
 
 // User Routes
 Route::get('/', function () {
@@ -123,7 +128,7 @@ Route::get('/antrean/{id}', [AppointmentController::class, 'show'])->name('antre
 
 Route::get('/artikel', [ArtikelUserController::class, 'index'])->name('artikel.index');
 Route::get('/artikel/cari', [ArtikelUserController::class, 'search'])->name('artikel.search');
-Route::get('/artikel/{id}', [ArtikelUserController::class, 'show'])->name('artikel.show');
+Route::get('/artikel/{judul_artikel}', [ArtikelUserController::class, 'show'])->name('artikel.show');
 Route::get('/welcome', [ArtikelUserController::class, 'welcome'])->name('welcome');
 
 //Akses Profil
@@ -164,8 +169,22 @@ Route::post('/chatklinik/send', [ChatKlinikController::class, 'send']);
 Route::get('/chatklinik', [ChatKlinikController::class, 'index']);
 Route::post('/chatklinik', [ChatKlinikController::class, 'send'])->name('chatklinik.kirim');
 
+// Form untuk minta reset password
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
 
+// Kirim link reset via email
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
 
+// Form untuk reset password (link dari email)
+Route::get('/reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+
+// Simpan password baru
+Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+Route::get('/tes-email', function () {
+    Mail::to('andreputrap30@gmail.com')->send(new TesEmail());
+    return 'Email dikirim!';
+});
 
 
 
@@ -184,7 +203,7 @@ Route::post('/chatklinik', [ChatKlinikController::class, 'send'])->name('chatkli
     Route::post('/praktik', [JadwalPraktikController::class, 'store'])->name('jadwal.store');
     Route::get('/praktik', [JadwalPraktikController::class, 'index'])->name('jadwal.index');
     Route::delete('/praktik/{id}', [JadwalPraktikController::class, 'destroy'])->name('jadwal.destroy');
-    Route::put('/praktik/{id}', [JadwalPraktikController::class, 'update'])->name('jadwal.update'); // ✅ Route Update
+    Route::put('/praktik/{id}', [JadwalPraktikController::class, 'update'])->name('jadwal.update'); 
 
 
 // Authentication Routes
